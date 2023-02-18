@@ -51,6 +51,7 @@ const Slider = ({ selectedImage, setSelectedImage }) => {
                 if (image !== selectedImage) {
                     return (
                         <Image
+                            key={image}
                             src={image}
                             style={{
                                 height:  '60px',
