@@ -50,19 +50,19 @@ const Slider = ({ selectedImage, setSelectedImage }) => {
             {imageArray.map((image) => {
                 if (image !== selectedImage) {
                     return (
-                        <Image
-                            key={image}
-                            src={image}
-                            style={{
-                                height:  '60px',
-                                width: '60px',
-                                paddingLeft: '40px',
-                                paddingRight: '10px',
-                                fontSize: '20px',
-                                alignSelf: 'center',
-                            }}
-                            onClick={() => setSelectedImage(image)}
-                        />
+                        <IconButton sx={{borderRadius: "0px"}} key={image} onClick={() => setSelectedImage(image)}>
+                            <Image
+                                src={image}
+                                style={{
+                                    height:  '60px',
+                                    width: '60px',
+                                    paddingLeft: '40px',
+                                    paddingRight: '10px',
+                                    fontSize: '20px',
+                                    alignSelf: 'center',
+                                }}
+                            />
+                        </IconButton>
                     )
                 }
             })}
