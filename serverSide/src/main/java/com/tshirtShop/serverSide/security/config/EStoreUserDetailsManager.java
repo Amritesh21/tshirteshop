@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.tshirtShop.serverSide.security.POJO.Authority;
+import com.tshirtShop.serverSide.security.POJO.LoadAuthUserDetails;
 import com.tshirtShop.serverSide.security.POJO.UserEntity;
 import com.tshirtShop.serverSide.security.repository.UserEntityService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,9 @@ public class EStoreUserDetailsManager implements UserDetailsService {
             UserEntity userEntity = userEntityService.getUserByUsername(username);
             if (userEntity != null) {
                 List<GrantedAuthority> grantedAuthorityList = getAllGrantedAuthorities(userEntity.getAuthorities());
-                return new User(userEntity.getUsername(), userEntity.getPassword(), grantedAuthorityList);
+                return new LoadAuthUserDetails(userEntity.getUsername(),
+                        userEntity.getPassword(), grantedAuthorityList,
+                        userEntity.getFirstName(), userEntity.getLastName());
             }
         }
         return null;

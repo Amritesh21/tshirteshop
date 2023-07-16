@@ -3,8 +3,14 @@ import { useSignUp } from "dataAccessObj/useSignUp";
 import { useState } from "react";
 import { textFieldStyle } from "./styleConstants";
 import { LoginSignUpButton } from "./loginSignUpBtn";
+import axios from "axios";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
 
 export const SignUpComponent = () => {
+
+    const router = useRouter();
+
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
@@ -18,6 +24,20 @@ export const SignUpComponent = () => {
     const[confirmPasswordError, setConfirmPasswordError] = useState(false);
 
     const [signUpPayload, setSignUpPayload] = useState(null);
+
+    useEffect(() => {
+        if (!signUpPayload?.userName || !signUpPayload?.password) { return; }
+        axios.post("api/public/create/user", {
+          ...signUpPayload
+        }).then((response) => {
+            if (response.data === 'User successfully added') {
+                router.push("/login");
+            } else {
+                console.log(response);
+                alert("Invalid values error!");
+            }
+        });
+    }, [signUpPayload]);
 
     useSignUp(signUpPayload);
 
@@ -51,8 +71,9 @@ export const SignUpComponent = () => {
             setSignUpPayload({
                 firstName,
                 lastName,
-                email,
-                password
+                userName: email,
+                password,
+                authorities: ["BUYER"]
             })
         }
     }
@@ -62,7 +83,7 @@ export const SignUpComponent = () => {
         <Grid container spacing={4} sx={{ pt: "40px" }}>
                 <Grid item xs={6}>
                     <TextField
-                        label="First Name"
+                        placeholder="First Name"
                         value={firstName}
                         onChange={(event) => setFirstName(event.target.value)}
                         error={firstNameError}
@@ -73,7 +94,7 @@ export const SignUpComponent = () => {
                 </Grid>
                 <Grid item xs={6}>
                     <TextField
-                        label="Last Name"
+                        placeholder="Last Name"
                         value={lastName}
                         onChange={(event) => setLastName(event.target.value)}
                         sx={textFieldStyle}
@@ -84,7 +105,7 @@ export const SignUpComponent = () => {
                 </Grid>
                 <Grid item xs={12}>
                     <TextField
-                        label="E-Mail Address"
+                        placeholder="E-Mail Address"
                         value={email}
                         sx={textFieldStyle}
                         onChange={(event) => setEmail(event.target.value)}
@@ -95,7 +116,7 @@ export const SignUpComponent = () => {
                 </Grid>
                 <Grid item xs={12}>
                     <TextField
-                        label="Enter Password"
+                        placeholder="Enter Password"
                         value={password}
                         sx={textFieldStyle}
                         type="password"
@@ -107,7 +128,7 @@ export const SignUpComponent = () => {
                 </Grid>
                 <Grid item xs={12}>
                     <TextField
-                        label="Confirm Password"
+                        placeholder="Confirm Password"
                         value={confirmPassword}
                         sx={textFieldStyle}
                         type="password"

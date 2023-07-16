@@ -10,21 +10,17 @@ import java.util.List;
 @Entity
 public class Authority {
 
-    @GeneratedValue
-    private String auth_id;
-
     @Id
     private String authority_name;
 
-    @ManyToMany(mappedBy = "authorities")
+    @ManyToMany(mappedBy = "authority")
     private List<UserEntity> users = new ArrayList<>();
 
-    public String getAuth_id() {
-        return auth_id;
+    public Authority() {
     }
 
-    public void setAuth_id(String auth_id) {
-        this.auth_id = auth_id;
+    public Authority(String authority_name) {
+        this.authority_name = authority_name;
     }
 
     public String getAuthority_name() {

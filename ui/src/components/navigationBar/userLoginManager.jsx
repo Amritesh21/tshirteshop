@@ -2,6 +2,7 @@ import { LoginContext } from "@/contexts/loginContext"
 import { Button, Popover } from "@mui/material"
 import { useContext } from "react"
 import { UserNotLoggedIn } from "./userNotLoggedIn";
+import { UserLoggedIn } from "./userLoggedIn";
 
 export const UserLoginManager = ({openUserLoginManager, setOpenUserLoginManager}) => {
     const {loginState} = useContext(LoginContext);
@@ -16,6 +17,7 @@ export const UserLoginManager = ({openUserLoginManager, setOpenUserLoginManager}
           }}
         >
             {!loginState && <UserNotLoggedIn setOpenUserLoginManager={setOpenUserLoginManager} />}
+            {loginState && <UserLoggedIn />}
         </Popover>
     )
 }

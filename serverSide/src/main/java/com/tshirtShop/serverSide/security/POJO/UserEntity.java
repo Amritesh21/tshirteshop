@@ -17,19 +17,24 @@ public class UserEntity {
     @Id
     private String username;
 
+    private String firstName;
+
+    private String lastName;
+
     private String password;
 
     @ManyToMany
-    private List<Authority> authorities = new ArrayList<Authority>();
+    private List<Authority> authority = new ArrayList<Authority>();
 
     public UserEntity () {
-
     }
 
-    public UserEntity( String username, String password, List<Authority> authorities) {
+    public UserEntity( String username, String password, List<Authority> authorities, String firstName, String lastName) {
         this.username = username;
         this.password = password;
-        this.authorities = authorities;
+        this.authority = authorities;
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 
     public String getUser_id() {
@@ -57,10 +62,26 @@ public class UserEntity {
     }
 
     public List<Authority> getAuthorities() {
-        return authorities;
+        return authority;
     }
 
     public void setAuthorities(Authority authority) {
-        this.authorities.add(authority);
+        this.authority.add(authority);
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 }

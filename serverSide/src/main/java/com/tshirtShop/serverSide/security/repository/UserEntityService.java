@@ -1,5 +1,6 @@
 package com.tshirtShop.serverSide.security.repository;
 
+import com.tshirtShop.serverSide.security.POJO.Authority;
 import com.tshirtShop.serverSide.security.POJO.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,15 @@ public class UserEntityService {
     public boolean addUser(UserEntity userEntity) {
         try {
             entityManager.persist(userEntity);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public boolean addAuthority(Authority authority) {
+        try {
+            entityManager.persist(authority);
             return true;
         } catch (Exception e) {
             return false;
