@@ -1,10 +1,8 @@
 package com.tshirtShop.serverSide.security.controller;
 
-import com.tshirtShop.serverSide.security.DTO.LoggedInUserDTO;
-import com.tshirtShop.serverSide.security.DTO.NewAuthority;
-import com.tshirtShop.serverSide.security.DTO.NewUserDTO;
-import com.tshirtShop.serverSide.security.DTO.UserLoginDetails;
+import com.tshirtShop.serverSide.security.DTO.*;
 import com.tshirtShop.serverSide.security.POJO.Authority;
+import com.tshirtShop.serverSide.security.POJO.CompleteUserEntity;
 import com.tshirtShop.serverSide.security.POJO.UserEntity;
 import com.tshirtShop.serverSide.security.repository.UserEntityService;
 import io.jsonwebtoken.Jwts;
@@ -17,10 +15,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextImpl;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.nio.charset.StandardCharsets;
 import java.util.function.Function;
@@ -87,6 +84,44 @@ public class RegisterNewUser {
         }
         final Supplier<LoggedInUserDTO> errorMessageSupplier = () -> { LoggedInUserDTO loggedInUserDTO = new LoggedInUserDTO(); loggedInUserDTO.setLogInMessage("Invalid credentials"); return loggedInUserDTO; };
         return ResponseEntity.ok().body(errorMessageSupplier.get());
+    }
+
+    @PostMapping("/api/public/update/user")
+    public CompleteUserDetailsDTO setUserDetails(@RequestBody CompleteUserDetailsDTO completeUserDetailsDTO) {
+        CompleteUserEntity completeUserEntity = new CompleteUserEntity();
+        UserEntity userEntity = userEntityService.getUserByUsername(completeUserDetailsDTO.getUsername());
+        CompleteUserEntity existingCompleteUserEntity = userEntityService.getCompleteUserByUsername(completeUserDetailsDTO.getUsername());
+        if (userEntity != null) {
+            if (existingCompleteUserEntity != null ){
+                completeUserEntity = existingCompleteUserEntity;
+            }
+            completeUserEntity.setAddress(completeUserDetailsDTO.getAddress());
+            completeUserEntity.setPhoneNo(completeUserDetailsDTO.getPhoneNo());
+            completeUserEntity.setAlternatePhoneNo(completeUserDetailsDTO.getAlternatePhoneNo());
+            completeUserEntity.setUsername(completeUserDetailsDTO.getUsername());
+            completeUserEntity.setUserEntity(userEntity);
+            userEntity.setFirstName(completeUserDetailsDTO.getFirstName());
+            userEntity.setLastName(completeUserDetailsDTO.getLastName());
+            userEntityService.addUser(userEntity);
+            if(userEntityService.setCompleteUserDetails(completeUserEntity) == true) {
+                return completeUserDetailsDTO;
+            }
+        }
+        return null;
+    }
+
+    @GetMapping("/api/public/user/complete/info/{username}")
+    public CompleteUserDetailsDTO getUserCompleteDetails(@PathVariable String username) {
+        UserEntity userEntity = userEntityService.getUserByUsername(username);
+        CompleteUserDetailsDTO completeUserDetailsDTO = new CompleteUserDetailsDTO();
+        CompleteUserEntity completeUserEntity = userEntityService.getCompleteUserByUsername(username);
+        completeUserDetailsDTO.setFirstName(userEntity.getFirstName());
+        completeUserDetailsDTO.setLastName(userEntity.getLastName());
+        completeUserDetailsDTO.setUsername(completeUserEntity.getUsername());
+        completeUserDetailsDTO.setPhoneNo(completeUserEntity.getPhoneNo());
+        completeUserDetailsDTO.setAlternatePhoneNo(completeUserEntity.getAlternatePhoneNo());
+        completeUserDetailsDTO.setAddress(completeUserEntity.getAddress());
+        return completeUserDetailsDTO;
     }
 
 }

@@ -1,10 +1,7 @@
 package com.tshirtShop.serverSide.security.POJO;
 
 import javax.annotation.processing.Generated;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +9,7 @@ import java.util.List;
 public class UserEntity {
 
     @GeneratedValue
-    private String user_id;
+    private long user_id;
 
     @Id
     private String username;
@@ -26,6 +23,9 @@ public class UserEntity {
     @ManyToMany
     private List<Authority> authority = new ArrayList<Authority>();
 
+    @OneToOne
+    private CompleteUserEntity completeUserEntity;
+
     public UserEntity () {
     }
 
@@ -37,11 +37,20 @@ public class UserEntity {
         this.lastName = lastName;
     }
 
-    public String getUser_id() {
+    public UserEntity( String username, String password, List<Authority> authorities, String firstName, String lastName, CompleteUserEntity completeUserEntity) {
+        this.username = username;
+        this.password = password;
+        this.authority = authorities;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.completeUserEntity = completeUserEntity;
+    }
+
+    public long getUser_id() {
         return user_id;
     }
 
-    public void setUser_id(String user_id) {
+    public void setUser_id(long user_id) {
         this.user_id = user_id;
     }
 
@@ -83,5 +92,13 @@ public class UserEntity {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public CompleteUserEntity getCompleteUserEntity() {
+        return completeUserEntity;
+    }
+
+    public void setCompleteUserEntity(CompleteUserEntity completeUserEntity) {
+        this.completeUserEntity = completeUserEntity;
     }
 }

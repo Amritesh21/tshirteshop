@@ -4,6 +4,7 @@ import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlin
 import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined';
 import { useState } from "react";
 import { UserLoginManager } from "./userLoginManager";
+import { UserProfileManager } from "./userProfileDrawer";
 
 export const UserDetailsField = () => {
     const [openUserLoginManager, setOpenUserLoginManager] = useState(null); 

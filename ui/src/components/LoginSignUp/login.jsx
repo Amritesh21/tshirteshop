@@ -24,7 +24,7 @@ export const LoginComponent = () => {
                 setLoginState({
                     firstName: response.data.firstName,
                     lastName: response.data.lastName,
-                    email: response.data.username,
+                    username: response.data.username,
                     authToken: response.headers[`auth-token`],
                 });
                 sessionStorage.setItem("auth-token", response.headers[`auth-token`]);

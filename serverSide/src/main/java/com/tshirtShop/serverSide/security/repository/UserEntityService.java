@@ -1,6 +1,7 @@
 package com.tshirtShop.serverSide.security.repository;
 
 import com.tshirtShop.serverSide.security.POJO.Authority;
+import com.tshirtShop.serverSide.security.POJO.CompleteUserEntity;
 import com.tshirtShop.serverSide.security.POJO.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,6 +37,19 @@ public class UserEntityService {
 
     public UserEntity getUserByUsername(String username) {
         return entityManager.find(UserEntity.class, username);
+    }
+
+    public CompleteUserEntity getCompleteUserByUsername(String username) {
+        return entityManager.find(CompleteUserEntity.class, username);
+    }
+
+    public boolean setCompleteUserDetails(CompleteUserEntity completeUserEntity) {
+        try{
+            entityManager.persist(completeUserEntity);
+            return  true;
+        } catch(Exception e) {
+            return false;
+        }
     }
 
 }
