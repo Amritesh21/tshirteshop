@@ -1,7 +1,8 @@
 import { Box, Typography } from "@mui/material"
 import Image from "next/image"
+import menuBarLogo from '../../../public/pictures/menuBarLogo.svg'
 
-export const BrandIcon = ({icon}) => {
+export const BrandIcon = () => {
     return (
         <Box
           sx={{
@@ -11,7 +12,7 @@ export const BrandIcon = ({icon}) => {
             alignContent: 'center'
           }}
         >
-            <Image src={icon} />
+            <Image src={menuBarLogo} />
             <Typography 
               sx={{
                 fontWeight: 600,

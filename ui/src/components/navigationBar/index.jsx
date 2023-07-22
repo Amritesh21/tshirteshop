@@ -1,7 +1,6 @@
 
 import { Box } from "@mui/material"
 import Image from "next/image"
-import menuBarLogo from '../../../public/pictures/menuBarLogo.svg'
 import { BrandIcon } from "./brandIcon"
 import { NavBarMenu } from "./navBarMenu"
 import { SearchBar } from "./searchBar"
@@ -17,7 +16,7 @@ export const NavigationBar = () => {
             height: "80px"
           }}
         >
-            <BrandIcon icon={menuBarLogo} />
+            <BrandIcon />
             <NavBarMenu />
             <Box 
               sx={{

@@ -70,7 +70,7 @@ public class RegisterNewUser {
                     .setIssuer("Mangcoding")
                     .setSubject("Login authentication")
                     .claim("username", validatedAuthObj.getName())
-                    .claim("authorities", validatedAuthObj.getAuthorities())
+                    .claim("authorities", validatedAuthObj.getAuthorities().stream().map(x -> x.getAuthority()).reduce("", (a, b) -> {return a.equals("") ? (a + b) : (a + "," + b);}))
                     .signWith(Keys.hmacShaKeyFor("jxgEQeXHuPq8VdbyYFNkANdudQ53YUn4".getBytes(StandardCharsets.UTF_8)))
                     .compact();
             SecurityContext securityContext = new SecurityContextImpl();
@@ -110,7 +110,7 @@ public class RegisterNewUser {
         return null;
     }
 
-    @GetMapping("/api/public/user/complete/info/{username}")
+    @GetMapping("/api/auth/user/complete/info/{username}")
     public CompleteUserDetailsDTO getUserCompleteDetails(@PathVariable String username) {
         UserEntity userEntity = userEntityService.getUserByUsername(username);
         CompleteUserDetailsDTO completeUserDetailsDTO = new CompleteUserDetailsDTO();
@@ -122,6 +122,19 @@ public class RegisterNewUser {
         completeUserDetailsDTO.setAlternatePhoneNo(completeUserEntity.getAlternatePhoneNo());
         completeUserDetailsDTO.setAddress(completeUserEntity.getAddress());
         return completeUserDetailsDTO;
+    }
+
+    @PostMapping("/api/auth/user/change/password")
+    public ResponseEntity<String> changeUserPassword(@RequestBody ChangePasswordDTO changePasswordDTO) {
+        UserEntity userEntity = userEntityService.getUserByUsername(changePasswordDTO.getUsername());
+        if (passwordEncoder.matches(changePasswordDTO.getCurrentPassword(), userEntity.getPassword())) {
+            userEntity.setPassword(passwordEncoder.encode(changePasswordDTO.getNewPassword()));
+            boolean updatePasswordFlag = userEntityService.addUser(userEntity);
+            if (updatePasswordFlag == true) {
+                return ResponseEntity.ok().body("Password successfully updated");
+            }
+        }
+        return ResponseEntity.ok().body("Unauthorized operation encountered");
     }
 
 }

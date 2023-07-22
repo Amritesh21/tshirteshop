@@ -15,9 +15,9 @@ const UserProfileForm = ({setOpenProfileDrawer}) => {
     const [address, setAddress] = useState("");
 
     const [newPassword, setNewPassword] = useState("");
-    const [currentPassword, setPassword] = useState("");
+    const [currentPassword, setCurrentPassword] = useState("");
 
-    const onClickUpdate = () => {
+    const onClickUpdateUser = () => {
         axios.post("/api/public/update/user", {
             firstName,
             lastName,
@@ -46,8 +46,30 @@ const UserProfileForm = ({setOpenProfileDrawer}) => {
         })
     }
 
+    const onClickUpdatePassword = () => {
+        axios.post("/api/auth/user/change/password", {username: loginState?.username, currentPassword, newPassword}, {
+            headers: {
+                "Auth-Token": loginState?.authToken
+            }
+        }).then((res) => {
+            if (res.data === "Password successfully updated") {
+                alert("Password of user has been successfully updated");
+                setOpenProfileDrawer(false);
+                setLoginState(null);
+                sessionStorage.removeItem('auth-token');
+                sessionStorage.removeItem('userDetails');
+            } else {
+                alert("Invalid access");
+            }
+        })
+    }
+
     useEffect(() => {
-        axios.get(`/api/public/user/complete/info/${loginState?.username}`)
+        axios.get(`/api/auth/user/complete/info/${loginState?.username}`, {
+            headers: {
+                "auth-token": loginState?.authToken
+            }
+        })
         .then((res) => {
             setFirstName(res.data.firstName);
             setLastName(res.data.lastName);
@@ -101,7 +123,7 @@ const UserProfileForm = ({setOpenProfileDrawer}) => {
                 </Grid>
                 <Grid item md={6}>
                     <Button variant="outlined"
-                      onClick={() => onClickUpdate()}
+                      onClick={() => onClickUpdateUser()}
                     >
                         Update user details
                     </Button>
@@ -111,13 +133,13 @@ const UserProfileForm = ({setOpenProfileDrawer}) => {
                     <Divider />
                 </Grid>
                 <Grid item md={6}>
-                    <TextField label="New Password" size="small" required/>
+                    <TextField label="New Password" size="small" required value={newPassword} onChange={(event) => setNewPassword(event.target.value)} />
                 </Grid>
                 <Grid item md={6}>
-                    <TextField label="Current Password" size="small" required/>
+                    <TextField label="Current Password" size="small" required value={currentPassword} onChange={(event) => setCurrentPassword(event.target.value)}/>
                 </Grid>
                 <Grid item md={6}>
-                    <Button variant="outlined">Change Password</Button>
+                    <Button variant="outlined" onClick={() => onClickUpdatePassword()}>Change Password</Button>
                 </Grid>
             </Grid>
         </Box>

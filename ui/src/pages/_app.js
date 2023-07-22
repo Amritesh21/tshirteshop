@@ -1,5 +1,6 @@
 //import '@/styles/globals.css'
 
+import { FooterComponent } from "@/components/footer";
 import { NavigationBar } from "@/components/navigationBar";
 import { LoginContext } from "@/contexts/loginContext";
 import { useEffect, useMemo, useState } from "react";
@@ -29,6 +30,7 @@ export default function App({ Component, pageProps }) {
      <LoginContext.Provider value={{loginState, setLoginState}}>
        <NavigationBar />
        <Component {...pageProps} />
+       <FooterComponent />
      </LoginContext.Provider>
     </>
   )
