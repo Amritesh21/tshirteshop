@@ -23,8 +23,8 @@ public class UserEntity {
     @ManyToMany
     private List<Authority> authority = new ArrayList<Authority>();
 
-    @OneToOne
-    private CompleteUserEntity completeUserEntity;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "userEntity")
+    CompleteUserEntity completeUserEntity;
 
     public UserEntity () {
     }

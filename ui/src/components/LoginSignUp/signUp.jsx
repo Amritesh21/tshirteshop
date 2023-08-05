@@ -1,4 +1,4 @@
-import { Box, Button, Grid, TextField } from "@mui/material"
+import { Autocomplete, Box, Button, Grid, TextField } from "@mui/material"
 import { useSignUp } from "dataAccessObj/useSignUp";
 import { useState } from "react";
 import { textFieldStyle } from "./styleConstants";
@@ -16,6 +16,8 @@ export const SignUpComponent = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+    const [userTypeOptions, setUserTypeOptions] = useState([]);
+    const [userType, setUserType] = useState(null);
 
     const[firstNameError, setFirstNameError] = useState(false);
     const[lastNameError, setLastNameError] = useState(false);
@@ -38,6 +40,12 @@ export const SignUpComponent = () => {
             }
         });
     }, [signUpPayload]);
+
+    useEffect(() => {
+        if(!userTypeOptions.length) {
+          axios.get("api/public/get/account/types").then((response) => { setUserTypeOptions(response.data) });
+        }
+    }, []);
 
     useSignUp(signUpPayload);
 
@@ -73,7 +81,7 @@ export const SignUpComponent = () => {
                 lastName,
                 userName: email,
                 password,
-                authorities: ["BUYER"]
+                authorities: [userType]
             })
         }
     }
@@ -137,6 +145,15 @@ export const SignUpComponent = () => {
                         required
                         helperText={confirmPasswordError && "Confirm password"}
                         size="small" />
+                </Grid>
+                <Grid item xs={12}>
+                    <Autocomplete
+                      options={userTypeOptions}
+                      value={userType}
+                      onChange={(event, newValue) => setUserType(newValue) }
+                      sx={{...textFieldStyle}}
+                      renderInput={(params) => <TextField {...params} sx={{'.MuiInputBase-input': {top: "-7px", position: "relative"}}} placeholder="Select account type"/>} 
+                    />
                 </Grid>
                 <LoginSignUpButton handleOnClick={onClickSignUp} btnText={"Sign Up"}/>
             </Grid></>

@@ -2,15 +2,16 @@ package com.tshirtShop.serverSide.security.DTO;
 
 public class LoggedInUserDTO {
 
-    private String username, firstName, lastName, logInMessage;
+    private String username, firstName, lastName, logInMessage, userType;
 
     public LoggedInUserDTO() {
     }
 
-    public LoggedInUserDTO(String username, String firstName, String lastName) {
+    public LoggedInUserDTO(String username, String firstName, String lastName, String userType) {
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.userType = userType;
     }
 
     public String getUsername() {
@@ -45,13 +46,22 @@ public class LoggedInUserDTO {
         this.logInMessage = logInMessage;
     }
 
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
+    }
+
     @Override
     public String toString() {
         return "LoggedInUserDTO{" +
-                "username:'" + username + '\'' +
-                ", 'firstName:'" + firstName + '\'' +
-                ", 'lastName:'" + lastName + '\'' +
-                ", 'logInMessage:'" + logInMessage + '\'' +
+                "username='" + username + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", logInMessage='" + logInMessage + '\'' +
+                ", userType='" + userType + '\'' +
                 '}';
     }
 }

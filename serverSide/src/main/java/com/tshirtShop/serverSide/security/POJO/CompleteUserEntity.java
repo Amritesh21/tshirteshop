@@ -8,15 +8,14 @@ public class CompleteUserEntity {
     @GeneratedValue
     private long id;
 
-    @OneToOne(mappedBy = "completeUserEntity", cascade = CascadeType.ALL)
-    private UserEntity userEntity;
-
     @Id
     @Column(nullable = false, unique = true)
     private String username;
     private long phoneNo;
     private long alternatePhoneNo;
     private String address;
+    @OneToOne(cascade = CascadeType.ALL)
+    UserEntity userEntity;
 
     public CompleteUserEntity(){}
 

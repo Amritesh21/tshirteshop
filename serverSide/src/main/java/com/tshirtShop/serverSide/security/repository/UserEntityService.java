@@ -8,7 +8,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import java.sql.ResultSet;
 import java.util.Date;
+import java.util.List;
 
 @Service
 @Transactional
@@ -32,6 +35,15 @@ public class UserEntityService {
             return true;
         } catch (Exception e) {
             return false;
+        }
+    }
+
+    public List<String> getAllAuthorities() {
+        try{
+            Query query = entityManager.createNativeQuery("Select * from authority");
+            return query.getResultList();
+        } catch (Exception e) {
+            return null;
         }
     }
 

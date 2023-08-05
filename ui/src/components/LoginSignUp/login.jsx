@@ -26,6 +26,7 @@ export const LoginComponent = () => {
                     lastName: response.data.lastName,
                     username: response.data.username,
                     authToken: response.headers[`auth-token`],
+                    userType: response.data.userType
                 });
                 sessionStorage.setItem("auth-token", response.headers[`auth-token`]);
                 sessionStorage.setItem("userDetails", JSON.stringify(response.data))

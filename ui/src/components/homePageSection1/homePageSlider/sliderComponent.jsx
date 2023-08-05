@@ -2,8 +2,12 @@ import { Box, IconButton } from "@mui/material"
 import Image from "next/image"
 import ArrowLeftOutlinedIcon from '@mui/icons-material/ArrowLeftOutlined';
 import ArrowRightOutlinedIcon from '@mui/icons-material/ArrowRightOutlined';
+import CloseIcon from '@mui/icons-material/Close';
 
-export const SliderComponent = ({imageArr, setSelectedImage, selectedImage, setImageArr}) => {
+export const SliderComponent = (props) => {
+    const {
+        imageArr, setSelectedImage, selectedImage, setImageArr, removeImageActive, handleRemoveImage
+    } = props;
     const onLeftButtonPress = () => {
         let sliderBox = document?.getElementById("slider-component")
         let width = sliderBox.clientWidth;
@@ -32,7 +36,7 @@ export const SliderComponent = ({imageArr, setSelectedImage, selectedImage, setI
     const onSelectImage = (index) => {
         setSelectedImage(index);
     }
-
+    
     return (
         <Box 
          sx={{
@@ -81,17 +85,27 @@ export const SliderComponent = ({imageArr, setSelectedImage, selectedImage, setI
             {imageArr.map((image, index) => (
                 <IconButton sx={{
                     width: "80px", height: "80px", padding: selectedImage === index ? "0px" : "15px", marginRight: (selectedImage === index && index === 0) ? "15px" : "0px",
-                    transition: "width 2s, height 4s"
+                    transition: "width 2s, height 4s",
+                    "&:hover": {
+                        '& > *': {
+                            display: "block"
+                        }
+                    }
                 }}
                   key={index}
                   onClick={() => onSelectImage(index)}
                 >
-                    <Image style={{
+                    <img style={{
                         position: "relative",
                         height: "100%",
                         width: "100%",
                         transition: "width 2s, height 2s, transform 2s",
                     }} src={image} alt={`${index}`} />
+                    {removeImageActive && <IconButton sx={{position: "absolute", padding: "1px", color: "white", display: "none", top: "0px", left: "60%", backgroundColor: "red"}}
+                      onClick={(event) => handleRemoveImage(event, index)}
+                    >
+                        <CloseIcon sx={{fontSize: "20px"}} />
+                    </IconButton>}
                 </IconButton>
             ))}
             </Box>
@@ -110,6 +124,7 @@ export const SliderComponent = ({imageArr, setSelectedImage, selectedImage, setI
             >
               <ArrowRightOutlinedIcon sx={{color: 'white'}} />
             </IconButton>
+            {props.children}
         </Box>
     )
 }

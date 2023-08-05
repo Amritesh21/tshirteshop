@@ -20,9 +20,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+@CrossOrigin("*")
 @RestController
 public class RegisterNewUser {
 
@@ -42,6 +45,9 @@ public class RegisterNewUser {
         userEntity.setPassword(passwordEncoder.encode(newUserDTO.getPassword()));
         userEntity.setFirstName(newUserDTO.getFirstName());
         userEntity.setLastName(newUserDTO.getLastName());
+        userEntity.setCompleteUserEntity(new CompleteUserEntity());
+        userEntity.getCompleteUserEntity().setUserEntity(userEntity);
+        userEntity.getCompleteUserEntity().setUsername(newUserDTO.getUserName());
         newUserDTO.getAuthorities().stream().forEach(authority -> userEntity.setAuthorities(new Authority(authority)));
         if (userEntityService.addUser(userEntity)) {
             return ResponseEntity.ok().body("User successfully added");
@@ -58,6 +64,11 @@ public class RegisterNewUser {
         } else {
             return ResponseEntity.ok().body("Invalid input provided");
         }
+    }
+
+    @GetMapping("api/public/get/account/types")
+    public List<String> getAllAuthorities() {
+        return userEntityService.getAllAuthorities();
     }
 
     @PostMapping("api/public/user/login")
@@ -78,7 +89,7 @@ public class RegisterNewUser {
             HttpHeaders httpHeaders = new HttpHeaders();
             httpHeaders.set("auth-token", jwToken);
             UserEntity loginUserDetails = userEntityService.getUserByUsername(validatedAuthObj.getName());
-            LoggedInUserDTO loggedInUserDTO = new LoggedInUserDTO(loginUserDetails.getUsername(), loginUserDetails.getFirstName(), loginUserDetails.getLastName());
+            LoggedInUserDTO loggedInUserDTO = new LoggedInUserDTO(loginUserDetails.getUsername(), loginUserDetails.getFirstName(), loginUserDetails.getLastName(), loginUserDetails.getAuthorities().get(0).getAuthority_name());
             loggedInUserDTO.setLogInMessage("Authentication successful");
             return ResponseEntity.ok().headers(httpHeaders).body(loggedInUserDTO);
         }
