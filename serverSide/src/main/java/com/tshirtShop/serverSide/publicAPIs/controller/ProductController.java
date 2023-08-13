@@ -1,6 +1,7 @@
 package com.tshirtShop.serverSide.publicAPIs.controller;
 
 import com.tshirtShop.serverSide.publicAPIs.DTO.NewProductDTO;
+import com.tshirtShop.serverSide.publicAPIs.DTO.PlaceOrderDTO;
 import com.tshirtShop.serverSide.publicAPIs.entity.ProductImageList;
 import com.tshirtShop.serverSide.publicAPIs.entity.ProductList;
 import com.tshirtShop.serverSide.publicAPIs.repository.ProductRepo;
@@ -11,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.websocket.server.PathParam;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +28,7 @@ public class ProductController {
     @Autowired
     ProductRepo productRepo;
 
-    @PostMapping("/api/public/add/new/product")
+    @PostMapping("/api/auth/seller/add/new/product")
     public ResponseEntity<String> saveNewProduct(@RequestParam("userName") String userName, @RequestParam("productCategory") String productCategory,
                                                  @RequestParam("productDescription") String productDescription, @RequestParam("productPrice") Long productPrice,
                                                  @RequestParam("colorsArray") List<String> colorsArray,  @RequestParam("selectSizes") List<String> selectSizes,
@@ -60,7 +62,7 @@ public class ProductController {
         return ResponseEntity.ok().body("Product added successfully");
     }
 
-    @GetMapping(value = "/api/public/seller/get/all/products/meta/{username}")
+    @GetMapping(value = "/api/auth/seller/get/all/products/meta/{username}")
     public List<NewProductDTO> getAllMyUploadedProducts(@PathVariable String username) {
         List<ProductList> productLists = uploadPublicImageRepo.fetchAllProductImage(username);
         List<NewProductDTO> getProductDTO = productLists.stream().map(p -> {
@@ -76,7 +78,7 @@ public class ProductController {
         return getProductDTO;
     }
 
-    @GetMapping(value = "/api/public/seller/get/product/meta/{productId}")
+    @GetMapping(value = "/api/public/get/product/meta/{productId}")
     public NewProductDTO getAllMyUploadedProducts(@PathVariable Long productId) {
         ProductList p = uploadPublicImageRepo.fetchProductDetails(productId);
             NewProductDTO newProductDTO = new NewProductDTO();
@@ -90,22 +92,49 @@ public class ProductController {
             return newProductDTO;
     }
 
-    @GetMapping(value = "/api/public/seller/get/thumbNail/{username}/{productId}", produces = MediaType.IMAGE_JPEG_VALUE)
+    @GetMapping(value = "/api/public/get/thumbNail/{username}/{productId}", produces = MediaType.IMAGE_JPEG_VALUE)
     public byte[] getMyProductsThumbNail(@PathVariable String username, @PathVariable Long productId) {
         return uploadPublicImageRepo.fetchProductThumbNail(username, productId);
     }
 
-    @GetMapping(value = "/api/public/seller/get/product/images/meta/{productId}")
+    @GetMapping(value = "/api/public/get/product/images/meta/{productId}")
     public List<Long> getProductImageMeta(@PathVariable Long productId) {
         List<ProductImageList> productImageList = uploadPublicImageRepo.fetchProductImageMeta(productId);
         List<Long> productImageIdMeta = productImageList.stream().map(x -> x.getImageId()).collect(Collectors.toList());
         return productImageIdMeta;
     }
 
-    @GetMapping(value = "/api/public/seller/get/product/image/{imageId}", produces = MediaType.IMAGE_JPEG_VALUE)
+    @GetMapping(value = "/api/public/get/product/image/{imageId}", produces = MediaType.IMAGE_JPEG_VALUE)
     public byte[] getProductImage(@PathVariable Long imageId) {
         ProductImageList productImageList = uploadPublicImageRepo.fetchProductImage(imageId);
         return productImageList.getImageFile();
     }
+
+    @GetMapping(value = "/api/public/get/products/meta")
+    public List<NewProductDTO> getAllProducts(@RequestParam int startPosition, @RequestParam int pageSize) {
+        List<ProductList> productLists = uploadPublicImageRepo.getAllProducts(startPosition, pageSize);
+        List<NewProductDTO> getProductDTO = productLists.stream().map(p -> {
+            NewProductDTO newProductDTO = new NewProductDTO();
+            newProductDTO.setProductId(p.getProductId());
+            newProductDTO.setProductCategory(p.getProductCategory());
+            newProductDTO.setProductDescription(p.getProductDescription());
+            newProductDTO.setProductPrice(p.getProductPrice());
+            newProductDTO.setSelectSizes(p.getSizes());
+            newProductDTO.setColorsArray(p.getColors());
+            return newProductDTO;
+        }).collect(Collectors.toList());
+        return getProductDTO;
+    }
+
+    @GetMapping(value = "/api/public/get/products/count")
+    public Long getTotalProductsCount() {
+        return uploadPublicImageRepo.getProductsCount();
+    }
+
+    @GetMapping(value = "/api/public/get/thumbNail/{productId}", produces = MediaType.IMAGE_JPEG_VALUE)
+    public byte[] getMyProductsThumbNail(@PathVariable Long productId) {
+        return uploadPublicImageRepo.fetchPublicProductThumbNail(productId);
+    }
+
 
 }

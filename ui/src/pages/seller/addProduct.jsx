@@ -35,7 +35,7 @@ const AddProduct = () => {
 
     useEffect(() => {
         if (!productId) { return; }
-        axios.get(`${baseURL}api/public/seller/get/product/meta/${productIdState}`)
+        axios.get(`${baseURL}api/public/get/product/meta/${productIdState}`)
         .then((response) => {
             setColorsArray(response.data.colorsArray.map((color) => color.replaceAll("[", "").replaceAll('"',"").replaceAll("]","")));
             setSelectSizes(response.data.selectSizes.map((size) => size.replaceAll("[", "").replaceAll('"',"").replaceAll("]","")));
@@ -45,7 +45,7 @@ const AddProduct = () => {
             setProductPrice(response.data.productPrice);
             setTargetGender(response.data.targetGender);
         });
-        axios.get(`${baseURL}api/public/seller/get/product/images/meta/${productIdState}`)
+        axios.get(`${baseURL}api/public/get/product/images/meta/${productIdState}`)
         .then((response) => {
             setProductImageListMeta(response.data);
         })
@@ -54,7 +54,7 @@ const AddProduct = () => {
     useEffect(() => {
         if (!productImageListMeta.length) {return;}
         productImageListMeta.forEach(async (productImageId) => {
-            await fetch(`${baseURL}api/public/seller/get/product/image/${productImageId}`)
+            await fetch(`${baseURL}api/public/get/product/image/${productImageId}`)
             .then(response => response?.blob())
             .then(imageBlob => {
                 setProductImageArray((preval) => [...preval, imageBlob]);
@@ -102,8 +102,9 @@ const AddProduct = () => {
         for (let i = 0; i < productImageArray.length; i++) {
           formData.append('productImageArray', productImageArray[i]);
         }
-        axios.post('http://localhost/api/public/add/new/product', formData, {headers: {
-            'Content-Type': 'multipart/form-data'
+        axios.post(`${baseURL}api/auth/seller/add/new/product`, formData, {headers: {
+            'Content-Type': 'multipart/form-data',
+            "Auth-Token": loginState?.authToken
         }}).then((response) => {
             if(response.status >= 200 && response.status <= 210) {
                 router.push("/shop");

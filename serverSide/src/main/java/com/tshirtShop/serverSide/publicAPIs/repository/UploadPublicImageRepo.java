@@ -54,6 +54,25 @@ public class UploadPublicImageRepo {
         return productList;
     }
 
+    public List<ProductList> getAllProducts(int startPosition, int pageSize) {
+        Query query = entityManager.createQuery("Select pl from ProductList pl", ProductList.class);
+        query.setFirstResult(startPosition);
+        query.setMaxResults(pageSize);
+        List<ProductList> productList = query.getResultList();
+        return productList;
+    }
+
+    public byte[] fetchPublicProductThumbNail(Long productId) {
+        Query query = entityManager.createQuery("Select pl from ProductList pl where pl.productId = :productId", ProductList.class);
+        query.setParameter("productId", productId);
+        List<ProductList> product = query.getResultList();
+        return product.get(0).getThumbNailImage();
+    }
+
+    public Long getProductsCount() {
+        return entityManager.createQuery("Select count(pl.productId) from ProductList pl", Long.class).getSingleResult().longValue();
+    }
+
     public byte[] fetchProductThumbNail(String username, Long productId) {
         Query query = entityManager.createQuery("Select pl from ProductList pl where pl.username =  :username and pl.productId = :productId", ProductList.class);
         query.setParameter("username", username);

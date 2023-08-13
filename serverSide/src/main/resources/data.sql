@@ -1,0 +1,1 @@
+create table customer_order_cart(id bigint primary key, product_id bigint, customer_name text);

@@ -3,7 +3,6 @@ package com.tshirtShop.serverSide.security.config;
 import com.tshirtShop.serverSide.security.filters.JWTAuthFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -20,9 +19,11 @@ public class CustomSecurityConfiguration {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .csrf().disable()
                 .addFilterBefore(new JWTAuthFilter(configureAPIWhiteListing()), UsernamePasswordAuthenticationFilter.class)
-                .authorizeHttpRequests()
-                .antMatchers("/public/*").permitAll()
-                .antMatchers("/auth/*").authenticated();
+                .authorizeRequests()
+                .antMatchers("/api/public/**").permitAll()
+                .antMatchers("/api/auth/user/**", "/api/auth/seller/**", "/api/auth/buyer/**").authenticated()
+                .antMatchers("/api/auth/seller/**").hasAuthority("SELLER")
+                .antMatchers("/api/auth/buyer/**").hasAuthority("BUYER");
         return httpSecurity.build();
     }
 

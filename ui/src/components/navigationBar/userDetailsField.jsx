@@ -5,9 +5,11 @@ import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined';
 import { useState } from "react";
 import { UserLoginManager } from "./userLoginManager";
 import { UserProfileManager } from "./userProfileDrawer";
+import { useRouter } from "next/router";
 
 export const UserDetailsField = () => {
     const [openUserLoginManager, setOpenUserLoginManager] = useState(null); 
+    const router = useRouter();
     return (
         <>
         <Box
@@ -17,7 +19,7 @@ export const UserDetailsField = () => {
             justifyContent: "space-evenly"
           }}
         >
-            <IconButton>
+            <IconButton onClick={() => {router.push("/orderCart")}}>
                 <ShoppingBagOutlinedIcon />
             </IconButton>
             <IconButton>

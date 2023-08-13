@@ -49,13 +49,17 @@ export const SellerView = () => {
     const testUser = "sellerUser1";
 
     useEffect(() => {
-        axios.get(`api/public/seller/get/all/products/meta/${loginState.username ?? testUser}`)
+        axios.get(`api/auth/seller/get/all/products/meta/${loginState.username ?? testUser}`,{
+            headers: {
+                "Auth-Token": loginState?.authToken
+            }
+        })
         .then((response) => { setProductsArray(response.data) });
     }, []);
 
     useEffect(() => {
         productsArray.forEach((product) => {
-        fetch(`api/public/seller/get/thumbNail/${loginState.username ?? testUser}/${product.productId}`)
+        fetch(`api/public/get/thumbNail/${loginState.username ?? testUser}/${product.productId}`)
         .then(response => response?.blob())
         .then(imageBlob => {
           setProductImage((preval) => [...preval, {image: URL.createObjectURL(imageBlob), productId: product.productId}]);
