@@ -6,7 +6,7 @@ import { useState } from "react";
 import { CommonSliderComponent } from "../sliderComponent";
 
 export const HomePageSection2 = () => {
-    const [imageArr, setImageArr] = useState([landingViewImage1, landingViewImage2, landingViewImage1, landingViewImage2, landingViewImage1, landingViewImage2, landingViewImage1, landingViewImage2, landingViewImage1, landingViewImage2, landingViewImage1, landingViewImage2]);
+    const [imageArr, setImageArr] = useState([landingViewImage1, landingViewImage2])//, landingViewImage1, landingViewImage2, landingViewImage1, landingViewImage2, landingViewImage1, landingViewImage2, landingViewImage1, landingViewImage2, landingViewImage1, landingViewImage2]);
     return (
         <Box sx={{ display: 'flex', flexDirection: 'row', py: "84px" }}>
             <Box sx={{ px: "120px", width: "60%" }}>
@@ -26,6 +26,7 @@ export const HomePageSection2 = () => {
                     setImageArr={setImageArr}
                     hasImageSelection={false}
                     containerBgColor={"white"}
+                    maxImageInOneFrame={1}
                     sliderDimension={{
                         containerHeight: "300px",
                         containerWidth: "100%",

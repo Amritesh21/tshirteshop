@@ -1,8 +1,7 @@
 package com.tshirtShop.serverSide.publicAPIs.controller;
 
-import com.tshirtShop.serverSide.publicAPIs.DTO.CartProductDTO;
-import com.tshirtShop.serverSide.publicAPIs.DTO.NewProductDTO;
-import com.tshirtShop.serverSide.publicAPIs.DTO.PlaceOrderDTO;
+import com.tshirtShop.serverSide.publicAPIs.DTO.*;
+import com.tshirtShop.serverSide.publicAPIs.POJO.SellerOrderInsights;
 import com.tshirtShop.serverSide.publicAPIs.entity.CustomerOrder;
 import com.tshirtShop.serverSide.publicAPIs.entity.CustomerOrderCart;
 import com.tshirtShop.serverSide.publicAPIs.entity.ProductList;
@@ -14,12 +13,15 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.websocket.server.PathParam;
+import java.io.IOException;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @RestController
+@CrossOrigin("*")
 public class OrderController {
 
     @Autowired
@@ -89,11 +91,63 @@ public class OrderController {
             customerOrder.setTotalCost(productListMap.get(x.getProductId()).getProductPrice() * x.getQuantity());
             customerOrder.setAddress(x.getAddress());
             customerOrder.setPhno(x.getPhno());
+            customerOrder.setOrderDate();
+            customerOrder.setOrderStatus();
             return customerOrder;
         }).collect(Collectors.toList());
         orderRepo.placeOrder(customerOrderLists);
         orderRepo.clearCart(SecurityContextHolder.getContext().getAuthentication().getName());
         return ResponseEntity.ok().body("Order placed successfully");
+    }
+
+    @GetMapping("/api/auth/buyer/get/all/my/orders")
+    public List<GetOrderDTO> getAllCustomerOrders() {
+        List<CustomerOrder> customerOrderList = orderRepo.getAllMyOrders(SecurityContextHolder.getContext().getAuthentication().getName());
+        List<GetOrderDTO> getOrderDTOList = customerOrderList.stream().map(x -> {
+            GetOrderDTO getOrderDTO = new GetOrderDTO();
+            getOrderDTO.setAddress(x.getAddress());
+            getOrderDTO.setColor(x.getColor());
+            getOrderDTO.setPhno(x.getPhno());
+            getOrderDTO.setPaymentMethod(x.getPaymentMethod());
+            getOrderDTO.setThumbNail(Base64.getEncoder().encodeToString(x.getProductList().getThumbNailImage()));
+            getOrderDTO.setQuantity(x.getQuantity());
+            getOrderDTO.setSize(x.getSize());
+            getOrderDTO.setProductId(x.getProductList().getProductId());
+            getOrderDTO.setTotalCost(x.getTotalCost());
+            getOrderDTO.setOrderStatus(x.getOrderStatus());
+            getOrderDTO.setProductCategory(x.getProductList().getProductCategory());
+            getOrderDTO.setOrderId(x.getOrderId());
+            return getOrderDTO;
+        }).collect(Collectors.toList());
+        return getOrderDTOList;
+    }
+
+    @DeleteMapping("/api/auth/buyer/order/cancel")
+    public void deleteOrder(@PathParam("orderId") Long orderId) {
+        orderRepo.cancelOrder(orderId);
+    }
+
+    @GetMapping("/api/public/order/insights")
+    public SellerOrderInsightDTO orderInsights() {
+        List<CustomerOrder> customerOrderList = orderRepo.getAllOrdersInsightsSeller("sellerUser1");
+        List<SellerOrderInsights> sellerOrderInsightsList = customerOrderList.stream().map(x -> {
+            SellerOrderInsights sellerOrderInsights =  new SellerOrderInsights();
+            sellerOrderInsights.setOrderDate(x.getOrderDate());
+            sellerOrderInsights.setTotalCost(x.getTotalCost());
+            return sellerOrderInsights;
+        }).collect(Collectors.toList());
+        SellerOrderInsightDTO sellerOrderInsightDTO = new SellerOrderInsightDTO();
+        sellerOrderInsightDTO.setDataType("STRING", "NUMBER");
+        sellerOrderInsightDTO.setData(sellerOrderInsightsList);
+        sellerOrderInsightDTO.setLegend("Order Date", "Total Earning");
+        sellerOrderInsightDTO.setGridLineFrequency(10, 10);
+
+        return sellerOrderInsightDTO;
+    }
+
+    @GetMapping("/api/public/redirect")
+    public void redirectToURL(HttpServletResponse httpServletResponse) throws IOException {
+        httpServletResponse.sendRedirect("/login");
     }
 
 }

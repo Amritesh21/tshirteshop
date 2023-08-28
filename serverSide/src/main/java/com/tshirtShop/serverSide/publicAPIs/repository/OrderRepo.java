@@ -1,5 +1,6 @@
 package com.tshirtShop.serverSide.publicAPIs.repository;
 
+import com.tshirtShop.serverSide.publicAPIs.POJO.SellerOrderInsights;
 import com.tshirtShop.serverSide.publicAPIs.entity.CustomerOrder;
 import com.tshirtShop.serverSide.publicAPIs.entity.CustomerOrderCart;
 import com.tshirtShop.serverSide.publicAPIs.entity.ProductList;
@@ -65,4 +66,25 @@ public class OrderRepo {
         query.setParameter("username", username);
         query.executeUpdate();
     }
+
+    public List<CustomerOrder> getAllMyOrders(String username) {
+        Query query = entityManager.createQuery("Select co from CustomerOrder co where co.buyer = :username");
+        query.setParameter("username", username);
+        List<CustomerOrder> customerOrderList = query.getResultList();
+        return customerOrderList;
+    }
+
+    public List<CustomerOrder> getAllOrdersInsightsSeller(String username) {
+        Query query = entityManager.createQuery("Select co from CustomerOrder co where co.productList.username = :username order by co.orderDate", CustomerOrder.class);
+        query.setParameter("username", username);
+        List<CustomerOrder> customerOrderList = query.getResultList();
+        return customerOrderList;
+    }
+
+    public void cancelOrder(Long orderId) {
+        Query query = entityManager.createQuery("Delete from CustomerOrder co where co.orderId = :orderId");
+        query.setParameter("orderId", orderId);
+        query.executeUpdate();
+    }
+
 }

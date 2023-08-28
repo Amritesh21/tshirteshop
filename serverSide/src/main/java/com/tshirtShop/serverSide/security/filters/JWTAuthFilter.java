@@ -48,7 +48,8 @@ public class JWTAuthFilter extends OncePerRequestFilter {
                         Arrays.stream(claims.get("authorities").toString().split(",")).map(x -> new SimpleGrantedAuthority(x)).collect(Collectors.toList())));
                 filterChain.doFilter(request, response);
             } else {
-                response.setStatus(400);
+                response.setStatus(401);
+                response.sendRedirect("/login");
                 response.getWriter().write("Unauthorized access restricted");
                 return;
             }

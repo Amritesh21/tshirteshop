@@ -12,12 +12,13 @@ import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import RemoveIcon from '@mui/icons-material/Remove';
 import { Checkout } from "@/components/checkout";
 
-const fetchProductMethod = (loginState, setProductListMeta) => {
+const fetchProductMethod = (loginState, setProductListMeta, setCartProductCount) => {
     axios.get("http://localhost/api/auth/buyer/get/cart/products", {
             headers: {
                 "Auth-Token": loginState?.authToken
             }
         }).then((response) => {
+            setCartProductCount(response?.data?.length ?? 0);
             if (!response.data.length) { setProductListMeta([]); }
             response.data.forEach((product, index) => {
                 fetch(`http://localhost/api/public/get/thumbNail/${product.newProductDTO.productId}`)
@@ -37,7 +38,7 @@ const fetchProductMethod = (loginState, setProductListMeta) => {
 
 const ProductTile = ({product, setTotalAmount, setProductListMeta}) => {
     const [quantity, setQuantity] = useState(0);
-    const {loginState} = useContext(LoginContext);
+    const {loginState, cartProductCount, setCartProductCount} = useContext(LoginContext);
 
     const router = useRouter();
 
@@ -66,7 +67,7 @@ const ProductTile = ({product, setTotalAmount, setProductListMeta}) => {
         .then((response) => {
             if (response.status === 200) {
                 alert(response.data);
-                fetchProductMethod(loginState, setProductListMeta);
+                fetchProductMethod(loginState, setProductListMeta, setCartProductCount);
             }
         })
     }
@@ -120,7 +121,7 @@ const ProductTile = ({product, setTotalAmount, setProductListMeta}) => {
 
 const OrderCart = () => {
     const [productListMeta, setProductListMeta] = useState([]);
-    const {loginState} = useContext(LoginContext);
+    const {loginState, cartProductCount, setCartProductCount} = useContext(LoginContext);
     const [totalAmount, setTotalAmount] = useState(0);
     const [proceedToCheckOut, setProceedToCheckOut] = useState(false);
     const imageSet = useRef(false);
@@ -129,7 +130,7 @@ const OrderCart = () => {
     
     useEffect(() => {
         if (!loginState) { return; }
-        fetchProductMethod(loginState, setProductListMeta);
+        fetchProductMethod(loginState, setProductListMeta, setCartProductCount);
     }, [loginState]);
 
     useEffect(() => {

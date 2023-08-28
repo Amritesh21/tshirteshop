@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import java.util.Date;
 
 @Entity
 public class CustomerOrder {
@@ -30,6 +31,10 @@ public class CustomerOrder {
     String address;
 
     Long phno;
+
+    String orderStatus;
+
+    Date orderDate;
 
     public CustomerOrder() {
     }
@@ -114,5 +119,29 @@ public class CustomerOrder {
 
     public void setPhno(Long phno) {
         this.phno = phno;
+    }
+
+    public String getOrderStatus() {
+        return orderStatus;
+    }
+
+    public void setOrderStatus(String orderStatus) {
+        this.orderStatus = orderStatus;
+    }
+
+    public void setOrderStatus() {
+        this.orderStatus = "Order Placed";
+    }
+
+    public Date getOrderDate() {
+        return orderDate;
+    }
+
+    public void setOrderDate() {
+        this.orderDate = new Date();
+    }
+
+    public Long getOrderId() {
+        return orderId;
     }
 }

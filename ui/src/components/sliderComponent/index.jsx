@@ -10,6 +10,7 @@ export const CommonSliderComponent = ({
     setImageArr,
     hasImageSelection = true,
     containerBgColor = "black",
+    maxImageInOneFrame = 3,
     sliderDimension = {
         containerHeight: "80px",
         containerWidth: "290px",
@@ -40,8 +41,10 @@ export const CommonSliderComponent = ({
         /**
          * TODo : this condition for infinite slider needs to be revisited
          */
-        if (activeIndex >= imageArr.length - 3) {
+        if (activeIndex >= imageArr.length - maxImageInOneFrame) {
             setImageArr(preval => [...preval].concat(imageArr))
+            // setActiveIndex(0);
+            // return;
         }
         setActiveIndex(preval => preval + 1);
         if (hasImageSelection) {

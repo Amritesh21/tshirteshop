@@ -7,6 +7,7 @@ import { useEffect, useMemo, useState } from "react";
 
 export default function App({ Component, pageProps }) {
   const [loginState, setLoginState] = useState(null);
+  const [cartProductCount, setCartProductCount] = useState(0);
 
   useEffect(() => {
     const authToken = sessionStorage.getItem('auth-token');
@@ -21,13 +22,14 @@ export default function App({ Component, pageProps }) {
 
   const memorizedLoginState = useMemo(() => {
     return {
-      loginState, setLoginState
+      loginState, setLoginState,
+      cartProductCount, setCartProductCount
     }
-  }, [loginState]);
+  }, [loginState, cartProductCount]);
 
   return (
     <>
-     <LoginContext.Provider value={{loginState, setLoginState}}>
+     <LoginContext.Provider value={{loginState, setLoginState, cartProductCount, setCartProductCount}}>
        <NavigationBar />
        <Component {...pageProps} />
        <FooterComponent />

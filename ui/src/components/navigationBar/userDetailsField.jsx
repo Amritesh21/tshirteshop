@@ -1,4 +1,4 @@
-import { Box, IconButton } from "@mui/material"
+import { Badge, Box, IconButton } from "@mui/material"
 import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined';
@@ -7,7 +7,7 @@ import { UserLoginManager } from "./userLoginManager";
 import { UserProfileManager } from "./userProfileDrawer";
 import { useRouter } from "next/router";
 
-export const UserDetailsField = () => {
+export const UserDetailsField = ({cartOrderMeta}) => {
     const [openUserLoginManager, setOpenUserLoginManager] = useState(null); 
     const router = useRouter();
     return (
@@ -20,11 +20,13 @@ export const UserDetailsField = () => {
           }}
         >
             <IconButton onClick={() => {router.push("/orderCart")}}>
-                <ShoppingBagOutlinedIcon />
+                <Badge badgeContent={cartOrderMeta} color="error">
+                  <ShoppingBagOutlinedIcon />
+                </Badge>
             </IconButton>
-            <IconButton>
+            {/* <IconButton>
                 <FavoriteBorderOutlinedIcon />
-            </IconButton>
+            </IconButton> */}
             <IconButton onClick={(event) => setOpenUserLoginManager(event.currentTarget)}>
                 <PersonOutlinedIcon />
             </IconButton>

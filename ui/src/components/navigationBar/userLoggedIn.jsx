@@ -5,13 +5,17 @@ import PriceCheckIcon from '@mui/icons-material/PriceCheck';
 import { useContext, useState } from "react";
 import { LoginContext } from "@/contexts/loginContext";
 import { UserProfileManager } from "./userProfileDrawer";
+import { useRouter } from "next/router";
 
 export const UserLoggedIn = ({setOpenUserLoginManager, setOpenProfileDrawer}) => {
-    const {loginState, setLoginState} = useContext(LoginContext);
+    const {loginState, setLoginState, setCartProductCount} = useContext(LoginContext);
+    const router = useRouter();
     const handleLogout = () => {
         setLoginState(null);
+        setCartProductCount(0);
         sessionStorage.removeItem('auth-token');
         sessionStorage.removeItem('userDetails');
+        router.push("/");
     }
     return(
         <>
@@ -34,6 +38,7 @@ export const UserLoggedIn = ({setOpenUserLoginManager, setOpenProfileDrawer}) =>
             </ListItemButton>
             <ListItemButton
               sx={{mt: "10px"}}
+              onClick={() => {router.push(`/buy/myOrders`)}}
             >
                 <ListItemIcon><PriceCheckIcon /></ListItemIcon>
                 <ListItemText>My Orders</ListItemText>
