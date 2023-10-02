@@ -91,19 +91,22 @@ class GridLineFrequency {
 }
 
 class Data {
-    String x;
+    int x;
     Long y;
 
-    public Data(String x, Long y) {
+    String xLabel;
+
+    public Data(String xLabel, Long y, int x) {
         this.x = x;
         this.y = y;
+        this.xLabel = xLabel;
     }
 
-    public String getX() {
+    public int getX() {
         return x;
     }
 
-    public void setX(String x) {
+    public void setX(int x) {
         this.x = x;
     }
 
@@ -113,6 +116,14 @@ class Data {
 
     public void setY(Long y) {
         this.y = y;
+    }
+
+    public String getXLabel() {
+        return xLabel;
+    }
+
+    public void setXLabel(String xLabel) {
+        this.xLabel = xLabel;
     }
 }
 
@@ -145,14 +156,15 @@ public class SellerOrderInsightDTO {
             }
         }
 
+        var count = 0;
         data = new ArrayList<>();
         for( String orderDate : sellerOrderInsightMap.keySet()) {
-            Data dataPoint = new Data(orderDate, sellerOrderInsightMap.get(orderDate));
+            Data dataPoint = new Data(orderDate, sellerOrderInsightMap.get(orderDate), count++ );
             data.add(dataPoint);
         }
         data = data.stream().sorted((x, y) -> {
             try {
-                return format.parse(x.getX()).compareTo(format.parse(y.getX()));
+                return format.parse(x.getXLabel()).compareTo(format.parse(y.getXLabel()));
             } catch (ParseException e) {
                 throw new RuntimeException(e);
             }

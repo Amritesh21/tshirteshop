@@ -2,13 +2,16 @@ import { Badge, Box, IconButton } from "@mui/material"
 import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined';
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { UserLoginManager } from "./userLoginManager";
 import { UserProfileManager } from "./userProfileDrawer";
 import { useRouter } from "next/router";
+import { LoginContext } from "@/contexts/loginContext";
+import { menuConstants } from "@/constants/menuConstants";
 
 export const UserDetailsField = ({cartOrderMeta}) => {
     const [openUserLoginManager, setOpenUserLoginManager] = useState(null); 
+    const {loginState} = useContext(LoginContext);
     const router = useRouter();
     return (
         <>
@@ -19,11 +22,11 @@ export const UserDetailsField = ({cartOrderMeta}) => {
             justifyContent: "space-evenly"
           }}
         >
-            <IconButton onClick={() => {router.push("/orderCart")}}>
+            {loginState?.userType !== menuConstants.seller && <IconButton onClick={() => {router.push("/orderCart")}}>
                 <Badge badgeContent={cartOrderMeta} color="error">
                   <ShoppingBagOutlinedIcon />
                 </Badge>
-            </IconButton>
+            </IconButton>}
             {/* <IconButton>
                 <FavoriteBorderOutlinedIcon />
             </IconButton> */}

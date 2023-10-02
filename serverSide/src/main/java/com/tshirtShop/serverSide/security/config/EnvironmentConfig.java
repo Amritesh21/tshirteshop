@@ -11,8 +11,6 @@ import java.util.Scanner;
 @Configuration
 public class EnvironmentConfig {
 
-
-
     @Bean
     public DataSource setDataSource() {
         DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();

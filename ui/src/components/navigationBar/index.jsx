@@ -8,17 +8,18 @@ import { UserDetailsField } from "./userDetailsField"
 import { useContext, useEffect, useState } from "react"
 import axios from "axios"
 import { LoginContext } from "@/contexts/loginContext"
+import { authFetcher } from "@/utilities/baseFetcher"
+import { menuConstants } from "@/constants/menuConstants"
 
 export const NavigationBar = () => {
 
   const {loginState, cartProductCount, setCartProductCount} = useContext(LoginContext);
 
   useEffect(() => {
-    axios.get("http://localhost/api/auth/buyer/get/cart/products", {
-            headers: {
-                "Auth-Token": loginState?.authToken
-            }
-        }).then((response) => { setCartProductCount(response.data?.length ?? 0); });
+    if (!loginState || loginState.userType !== menuConstants.buyer) { return; }
+    authFetcher("api/auth/buyer/get/cart/products")
+    .then((response) => response.json())
+    .then((response) => { setCartProductCount(response?.length ?? 0); });
   }, [loginState]);
 
     return (

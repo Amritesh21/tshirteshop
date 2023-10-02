@@ -5,6 +5,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
+import { imageFetcher, publicFetcher } from "@/utilities/baseFetcher";
 
 const ProductListComponent = () => {
     const [productsMeta, setProductsMeta] = useState([]);
@@ -16,23 +17,26 @@ const ProductListComponent = () => {
     const router = useRouter();
 
     useEffect(() => {
-        axios.get(`http://localhost/api/public/get/products/count`)
-        .then((response) => setTotalRecords(response.data));
+        publicFetcher(`api/public/get/products/count`)
+        .then((response) => response.json())
+        .then((response) => setTotalRecords(response));
     }, []);
 
     useEffect(() => {
         console.log(startPosition, "start position changed");
-        axios.get(`http://localhost/api/public/get/products/meta?startPosition=${startPosition}&pageSize=${6}`)
-        .then((response) => setProductMetaBuffer(response.data));
+        publicFetcher(`api/public/get/products/meta?startPosition=${startPosition}&pageSize=${6}`)
+        .then((response) => response.json())
+        .then((response) => setProductMetaBuffer(response));
     }, [startPosition]);
 
     useEffect(() => {
         if (!productMetaBuffer.length) {return;}
+        const thumbnailObj = {};
         productMetaBuffer.forEach((product) => {
-            fetch(`http://localhost/api/public/get/thumbNail/${product.productId}`)
-            .then((response) => response?.blob())
-            .then((imageBlob) => setProductThumbNailArr((prevVal) => {return {...prevVal, [product.productId] : URL.createObjectURL(imageBlob)}}));
-        });
+            thumbnailObj[product.productId] = imageFetcher(`api/public/get/thumbNail/${product.productId}`);
+        }
+        );
+        setProductThumbNailArr(thumbnailObj);
         setProductsMeta((preval) => [...preval, ...productMetaBuffer])
     }, [productMetaBuffer]);
 

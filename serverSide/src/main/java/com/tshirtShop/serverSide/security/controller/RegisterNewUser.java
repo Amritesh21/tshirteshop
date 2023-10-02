@@ -19,6 +19,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -72,7 +74,7 @@ public class RegisterNewUser {
     }
 
     @PostMapping("api/public/user/login")
-    public ResponseEntity<LoggedInUserDTO> userLoginValidation(@RequestBody UserLoginDetails userLoginDetails) {
+    public ResponseEntity<LoggedInUserDTO> userLoginValidation(@RequestBody UserLoginDetails userLoginDetails, HttpServletResponse httpServletResponse) {
         Authentication enteredAuthObj = new UsernamePasswordAuthenticationToken(userLoginDetails.getUsername(), userLoginDetails.getPassword());
         Authentication validatedAuthObj =  authenticationProvider.authenticate(enteredAuthObj);
         String jwToken = null;
@@ -88,6 +90,9 @@ public class RegisterNewUser {
             securityContext.setAuthentication(validatedAuthObj);
             HttpHeaders httpHeaders = new HttpHeaders();
             httpHeaders.set("auth-token", jwToken);
+            httpHeaders.set("Content-Type", "application/json");
+            httpServletResponse.addCookie(new Cookie("auth-token", jwToken));
+            httpServletResponse.setHeader("Access-Control-Expose-Headers", "auth-token");
             UserEntity loginUserDetails = userEntityService.getUserByUsername(validatedAuthObj.getName());
             LoggedInUserDTO loggedInUserDTO = new LoggedInUserDTO(loginUserDetails.getUsername(), loginUserDetails.getFirstName(), loginUserDetails.getLastName(), loginUserDetails.getAuthorities().get(0).getAuthority_name());
             loggedInUserDTO.setLogInMessage("Authentication successful");

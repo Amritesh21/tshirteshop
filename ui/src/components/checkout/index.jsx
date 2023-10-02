@@ -1,4 +1,5 @@
 import { LoginContext } from "@/contexts/loginContext";
+import { authFetcher } from "@/utilities/baseFetcher";
 import { Box, Button, FormControlLabel, Modal, Popover, Radio, RadioGroup, Step, StepContent, StepLabel, Stepper, TextField } from "@mui/material"
 import axios from "axios";
 import { useRouter } from "next/router";
@@ -24,24 +25,22 @@ export const Checkout = ({open, setOpen, productListMeta}) => {
     } 
 
     const handlePlaceOrder = () => {
-        axios.post("http://localhost/api/auth/buyer/place/order",
-            productListMeta.map((product) => {
-                return {
-                    size: product.customerOrderCart.size,
-                    color: product.customerOrderCart.color,
-                    quantity: product.customerOrderCart.quantity,
-                    productId: product.newProductDTO.productId,
-                    paymentMethod: paymentMethod,
-                    address: deliveryDetails.address,
-                    phno: Number(deliveryDetails.phno),
-                }
-            }),
+        authFetcher("api/auth/buyer/place/order",
             {
-                headers: {
-                    "Auth-Token": loginState?.authToken
-                }
+                method: "POST",
+                body: JSON.stringify(productListMeta.map((product) => {
+                    return {
+                        size: product.customerOrderCart.size,
+                        color: product.customerOrderCart.color,
+                        quantity: product.customerOrderCart.quantity,
+                        productId: product.newProductDTO.productId,
+                        paymentMethod: paymentMethod,
+                        address: deliveryDetails.address,
+                        phno: Number(deliveryDetails.phno),
+                    }
+                }))
             }
-        ).then((response) => alert(response.data));
+        ).then((response) => alert(response.text()));
         setNextActiveStep();
     }
 

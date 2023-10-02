@@ -127,23 +127,23 @@ public class OrderController {
         orderRepo.cancelOrder(orderId);
     }
 
-    @GetMapping("/api/public/order/insights")
-    public SellerOrderInsightDTO orderInsights() {
-        List<CustomerOrder> customerOrderList = orderRepo.getAllOrdersInsightsSeller("sellerUser1");
-        List<SellerOrderInsights> sellerOrderInsightsList = customerOrderList.stream().map(x -> {
-            SellerOrderInsights sellerOrderInsights =  new SellerOrderInsights();
-            sellerOrderInsights.setOrderDate(x.getOrderDate());
-            sellerOrderInsights.setTotalCost(x.getTotalCost());
-            return sellerOrderInsights;
-        }).collect(Collectors.toList());
-        SellerOrderInsightDTO sellerOrderInsightDTO = new SellerOrderInsightDTO();
-        sellerOrderInsightDTO.setDataType("STRING", "NUMBER");
-        sellerOrderInsightDTO.setData(sellerOrderInsightsList);
-        sellerOrderInsightDTO.setLegend("Order Date", "Total Earning");
-        sellerOrderInsightDTO.setGridLineFrequency(10, 10);
-
-        return sellerOrderInsightDTO;
-    }
+//    @GetMapping("/api/public/order/insights")
+//    public SellerOrderInsightDTO orderInsights() {
+//        List<CustomerOrder> customerOrderList = orderRepo.getAllOrdersInsightsSeller("sellerUser1");
+//        List<SellerOrderInsights> sellerOrderInsightsList = customerOrderList.stream().map(x -> {
+//            SellerOrderInsights sellerOrderInsights =  new SellerOrderInsights();
+//            sellerOrderInsights.setOrderDate(x.getOrderDate());
+//            sellerOrderInsights.setTotalCost(x.getTotalCost());
+//            return sellerOrderInsights;
+//        }).collect(Collectors.toList());
+//        SellerOrderInsightDTO sellerOrderInsightDTO = new SellerOrderInsightDTO();
+//        sellerOrderInsightDTO.setDataType("STRING", "NUMBER");
+//        sellerOrderInsightDTO.setData(sellerOrderInsightsList);
+//        sellerOrderInsightDTO.setLegend("Order Date", "Total Earning");
+//        sellerOrderInsightDTO.setGridLineFrequency(10, 10);
+//
+//        return sellerOrderInsightDTO;
+//    }
 
     @GetMapping("/api/public/redirect")
     public void redirectToURL(HttpServletResponse httpServletResponse) throws IOException {

@@ -5,6 +5,7 @@ import { useContext, useEffect, useState } from "react";
 import { LoginContext } from "@/contexts/loginContext";
 import axios from "axios";
 import Image from "next/image";
+import { authFetcher } from "@/utilities/baseFetcher";
 
 const AddNewProductTile = () => {
     const router = useRouter();
@@ -49,28 +50,19 @@ export const SellerView = () => {
     const testUser = "sellerUser1";
 
     useEffect(() => {
-        axios.get(`api/auth/seller/get/all/products/meta/${loginState.username ?? testUser}`,{
-            headers: {
-                "Auth-Token": loginState?.authToken
-            }
-        })
-        .then((response) => { setProductsArray(response.data) });
+        authFetcher(`api/auth/seller/get/all/products/meta`)
+        .then((response) => response.json())
+        .then((response) => { setProductsArray(response) });
     }, []);
 
     useEffect(() => {
+        if (productsArray.length <= 0) { return; }
+        const imageObjArr = []
         productsArray.forEach((product) => {
-        fetch(`api/public/get/thumbNail/${loginState.username ?? testUser}/${product.productId}`)
-        .then(response => response?.blob())
-        .then(imageBlob => {
-          setProductImage((preval) => [...preval, {image: URL.createObjectURL(imageBlob), productId: product.productId}]);
-          }
-        )
+          imageObjArr.push({image: `api/public/get/thumbNail/${product.productId}`, productId: product.productId});
         });
+        setProductImage(imageObjArr);
     }, [productsArray]);
-
-    useEffect(() => {
-        console.log(productImage)
-    }, [productImage]);
 
     return (
         <Box sx={{

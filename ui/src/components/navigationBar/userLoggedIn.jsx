@@ -6,6 +6,7 @@ import { useContext, useState } from "react";
 import { LoginContext } from "@/contexts/loginContext";
 import { UserProfileManager } from "./userProfileDrawer";
 import { useRouter } from "next/router";
+import { menuConstants } from "@/constants/menuConstants";
 
 export const UserLoggedIn = ({setOpenUserLoginManager, setOpenProfileDrawer}) => {
     const {loginState, setLoginState, setCartProductCount} = useContext(LoginContext);
@@ -36,13 +37,20 @@ export const UserLoggedIn = ({setOpenUserLoginManager, setOpenProfileDrawer}) =>
                 <ListItemIcon><PermIdentityIcon /></ListItemIcon>
                 <ListItemText>My Profile</ListItemText>
             </ListItemButton>
-            <ListItemButton
+            {loginState?.userType === menuConstants.buyer && <ListItemButton
               sx={{mt: "10px"}}
               onClick={() => {router.push(`/buy/myOrders`)}}
             >
                 <ListItemIcon><PriceCheckIcon /></ListItemIcon>
                 <ListItemText>My Orders</ListItemText>
-            </ListItemButton>
+            </ListItemButton>}
+            {loginState?.userType === menuConstants.seller && <ListItemButton
+              sx={{mt: "10px"}}
+              onClick={() => {router.push(`/seller/dashBoard`)}}
+            >
+                <ListItemIcon><PriceCheckIcon /></ListItemIcon>
+                <ListItemText>Seller Dashboard</ListItemText>
+            </ListItemButton>}
             <ListItemButton
               sx={{mt: "10px"}}
               onClick={() => handleLogout()}

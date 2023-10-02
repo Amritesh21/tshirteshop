@@ -6,6 +6,7 @@ import { LoginSignUpButton } from "./loginSignUpBtn";
 import axios from "axios";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
+import { publicFetcher } from "@/utilities/baseFetcher";
 
 export const SignUpComponent = () => {
 
@@ -29,10 +30,12 @@ export const SignUpComponent = () => {
 
     useEffect(() => {
         if (!signUpPayload?.userName || !signUpPayload?.password) { return; }
-        axios.post("api/public/create/user", {
-          ...signUpPayload
-        }).then((response) => {
-            if (response.data === 'User successfully added') {
+        publicFetcher("api/public/create/user", {
+          body: JSON.stringify({...signUpPayload}),
+          method: "POST"
+        }).then((response) => response.text())
+          .then((response) => {
+            if (response === 'User successfully added') {
                 router.push("/login");
             } else {
                 console.log(response);
@@ -43,7 +46,7 @@ export const SignUpComponent = () => {
 
     useEffect(() => {
         if(!userTypeOptions.length) {
-          axios.get("api/public/get/account/types").then((response) => { setUserTypeOptions(response.data) });
+          publicFetcher("api/public/get/account/types").then((response) => response.json()).then((response) => { setUserTypeOptions(response) });
         }
     }, []);
 

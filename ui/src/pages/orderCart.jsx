@@ -11,28 +11,20 @@ import CircleIcon from '@mui/icons-material/Circle';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import RemoveIcon from '@mui/icons-material/Remove';
 import { Checkout } from "@/components/checkout";
+import { authFetcher, getBaseURL, imageFetcher } from "@/utilities/baseFetcher";
 
 const fetchProductMethod = (loginState, setProductListMeta, setCartProductCount) => {
-    axios.get("http://localhost/api/auth/buyer/get/cart/products", {
-            headers: {
-                "Auth-Token": loginState?.authToken
-            }
-        }).then((response) => {
-            setCartProductCount(response?.data?.length ?? 0);
-            if (!response.data.length) { setProductListMeta([]); }
-            response.data.forEach((product, index) => {
-                fetch(`http://localhost/api/public/get/thumbNail/${product.newProductDTO.productId}`)
-                .then((response) => response?.blob())
-                .then((imageBlob) => {
-                    product.thumbNailImage = URL.createObjectURL(imageBlob);
-                    if (index !== 0) {
-                        setProductListMeta((preval) => [ ...preval, product]);
-                    } else {
-                        setProductListMeta(() => [product]);
-                    }
-
-                });
+    authFetcher("api/auth/buyer/get/cart/products")
+    .then(response => response.json())
+    .then((response) => {
+            setCartProductCount(response?.length ?? 0);
+            if (!response.length) { setProductListMeta([]); }
+            const productListMetaArr = [];
+            response.forEach((product, index) => {
+                    product.thumbNailImage = imageFetcher(`api/public/get/thumbNail/${product.newProductDTO.productId}`);
+                    productListMetaArr.push(product);
             });
+            setProductListMeta(productListMetaArr);
         });
 }
 
@@ -59,16 +51,17 @@ const ProductTile = ({product, setTotalAmount, setProductListMeta}) => {
     }
 
     const deleteProductFromCart = () => {
-        axios.put(`http://localhost/api/auth/buyer/remove/${product.newProductDTO.productId}/from/cart`, {}, {
-            headers: {
-                "Auth-Token": loginState?.authToken
-            }
+        authFetcher(`api/auth/buyer/remove/${product.newProductDTO.productId}/from/cart`, {
+            method: "PUT"
         })
         .then((response) => {
             if (response.status === 200) {
-                alert(response.data);
-                fetchProductMethod(loginState, setProductListMeta, setCartProductCount);
+                return response.text();
             }
+        })
+        .then((response) => {
+            alert(response);
+            fetchProductMethod(loginState, setProductListMeta, setCartProductCount);
         })
     }
     
@@ -95,7 +88,7 @@ const ProductTile = ({product, setTotalAmount, setProductListMeta}) => {
               </IconButton>
             </Box>
             <Box sx={{display: "flex", justifyContent: "space-between", padding: "40px"}}>
-                <Button onClick={() => { router.push(`http://localhost/buy/product?productId=${product.newProductDTO.productId}`) }}>View Product Details</Button>
+                <Button onClick={() => { router.push(`${getBaseURL()}/buy/product?productId=${product.newProductDTO.productId}`) }}>View Product Details</Button>
                 <TextField
                     size="small"
                     value={quantity}
@@ -125,8 +118,6 @@ const OrderCart = () => {
     const [totalAmount, setTotalAmount] = useState(0);
     const [proceedToCheckOut, setProceedToCheckOut] = useState(false);
     const imageSet = useRef(false);
-    console.log(productListMeta);
-    console.log(loginState);
     
     useEffect(() => {
         if (!loginState) { return; }

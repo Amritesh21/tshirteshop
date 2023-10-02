@@ -6,6 +6,7 @@ import landingViewImage2 from '../../../../public/pictures/landingViewImage2.png
 import { SliderComponent } from "./sliderComponent";
 import { SliderComponent2 } from "./slider2";
 import { CommonSliderComponent } from "@/components/sliderComponent";
+import { imageFetcher, publicFetcher } from "@/utilities/baseFetcher";
 
 export const HomePageSlider = () => {
   const [selectedImage, setSelectedImage] = useState(0);
@@ -14,29 +15,24 @@ export const HomePageSlider = () => {
   const [imageRefIndex, setImageRefIndex] = useState(null);
  // const [imageArr, setImageArr] = useState([landingViewImage1, landingViewImage2, landingViewImage1, landingViewImage2, landingViewImage1, landingViewImage2, landingViewImage1, landingViewImage2, landingViewImage1, landingViewImage2, landingViewImage1, landingViewImage2]);
   const [imageArr, setImageArr] = useState([]);
+  const [productsMetaBuffer, setProductsMetaBuffer] = useState([]);
   useEffect(() => {
-      fetch('/api/public/getImageList')
-        .then(response => response.json())
-        .then(res => {
-          console.log(res["publicImageList"])
-          setImageList(res["publicImageList"]);
-          setImageRefIndex(res["publicImageList"][0]);
-          currentIndex.current = 0;
-        });
+    // console.log(startPosition, "start position changed");
+    publicFetcher(`api/public/get/products/meta?startPosition=0&pageSize=10`)
+      .then((response) => response.json())
+      .then((response) => setProductsMetaBuffer(response));
   }, []);
+
   useEffect(() => {
-      if (!imageRefIndex) { return; }
-      fetch(`/api/public/getImage/${imageRefIndex}`)
-        .then(response => response?.blob())
-        .then(imageBlob => {
-          const imageURL = URL.createObjectURL(imageBlob);
-          setImageArr([...imageArr, imageURL]);
-          if (currentIndex.current < imageList.length) {
-             setImageRefIndex(currentIndex.current + 1);
-             currentIndex.current = currentIndex.current + 1;
-          }
-        });
-    }, [imageRefIndex]);
+    if (!productsMetaBuffer.length) { return; }
+    const imageArrTemp = [];
+    productsMetaBuffer.forEach((product) => {
+      imageArrTemp.push(imageFetcher(`api/public/get/thumbNail/${product.productId}`));
+    }
+    );
+    setImageArr(imageArrTemp);
+  }, [productsMetaBuffer]);
+
   return (
     <Box
       sx={{
@@ -52,7 +48,7 @@ export const HomePageSlider = () => {
         position: "relative",
       }}
     >
-      <Image src={imageArr[selectedImage]} style={{ height: '100%', width: '100%' }} alt="Image-value" />
+      <Image src={imageArr[selectedImage]} style={{ height: '100%', width: '100%' }} alt="Image-value" width={100} height={100} />
       {/*<SliderComponent imageArr={imageArr} setSelectedImage={setSelectedImage} selectedImage={selectedImage} setImageArr={setImageArr} />*/}
       {/*imageArr.length && <SliderComponent2 imageArr={imageArr} setSelectedImage={setSelectedImage} selectedImage={selectedImage} setImageArr={setImageArr} />*/}
       {imageArr.length &&

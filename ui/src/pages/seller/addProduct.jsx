@@ -7,6 +7,7 @@ import { SliderComponent } from "@/components/homePageSection1/homePageSlider/sl
 import axios from "axios";
 import { LoginContext } from "@/contexts/loginContext";
 import { useRouter } from "next/router";
+import { getBaseURL, imageFetcher, publicFetcher } from "@/utilities/baseFetcher";
 
 const { Box, Typography, Button, Grid, TextField, Autocomplete, IconButton } = require("@mui/material")
 
@@ -35,26 +36,28 @@ const AddProduct = () => {
 
     useEffect(() => {
         if (!productId) { return; }
-        axios.get(`${baseURL}api/public/get/product/meta/${productIdState}`)
+        publicFetcher(`api/public/get/product/meta/${productIdState}`)
+        .then((response) => response.json())
         .then((response) => {
-            setColorsArray(response.data.colorsArray.map((color) => color.replaceAll("[", "").replaceAll('"',"").replaceAll("]","")));
-            setSelectSizes(response.data.selectSizes.map((size) => size.replaceAll("[", "").replaceAll('"',"").replaceAll("]","")));
-            setProductCategory(response.data.productCategory);
-            setProductDescription(response.data.productDescription);
-            setTotalStock(response.data.totalStock);
-            setProductPrice(response.data.productPrice);
-            setTargetGender(response.data.targetGender);
+            setColorsArray(response.colorsArray.map((color) => color.replaceAll("[", "").replaceAll('"',"").replaceAll("]","")));
+            setSelectSizes(response.selectSizes.map((size) => size.replaceAll("[", "").replaceAll('"',"").replaceAll("]","")));
+            setProductCategory(response.productCategory);
+            setProductDescription(response.productDescription);
+            setTotalStock(response.totalStock);
+            setProductPrice(response.productPrice);
+            setTargetGender(response.targetGender);
         });
-        axios.get(`${baseURL}api/public/get/product/images/meta/${productIdState}`)
+        publicFetcher(`api/public/get/product/images/meta/${productIdState}`)
+        .then((response) => response.json())
         .then((response) => {
-            setProductImageListMeta(response.data);
+            setProductImageListMeta(response);
         })
     }, [productIdState]);
 
     useEffect(() => {
         if (!productImageListMeta.length) {return;}
         productImageListMeta.forEach(async (productImageId) => {
-            await fetch(`${baseURL}api/public/get/product/image/${productImageId}`)
+            await fetch(`${getBaseURL()}/api/public/get/product/image/${productImageId}`)
             .then(response => response?.blob())
             .then(imageBlob => {
                 setProductImageArray((preval) => [...preval, imageBlob]);
@@ -63,7 +66,6 @@ const AddProduct = () => {
     }, [productImageListMeta]);
 
     useEffect(() => {
-        console.log(productImageArray)
         if (productImageArray.length > 0) {
           setSelectedImage(productImageArray.length - 1);
         }
@@ -76,7 +78,6 @@ const AddProduct = () => {
     }
 
     const handleClick = (size) => {
-        console.log(size)
         if (selectSizes.indexOf(size) === -1) {
             setSelectSizes([...selectSizes, size]);
         } else {
@@ -88,7 +89,6 @@ const AddProduct = () => {
     }
 
     const handleProductSave = () => {
-        console.log(productImageArray);
         const formData = new FormData();
         formData.append("productId", productIdState || 0);
         formData.append("userName", loginState.username);
@@ -102,7 +102,7 @@ const AddProduct = () => {
         for (let i = 0; i < productImageArray.length; i++) {
           formData.append('productImageArray', productImageArray[i]);
         }
-        axios.post(`${baseURL}api/auth/seller/add/new/product`, formData, {headers: {
+        axios.post(`${getBaseURL()}/api/auth/seller/add/new/product`, formData, {headers: {
             'Content-Type': 'multipart/form-data',
             "Auth-Token": loginState?.authToken
         }}).then((response) => {

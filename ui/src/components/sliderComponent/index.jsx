@@ -114,7 +114,7 @@ export const CommonSliderComponent = ({
                             width: activeIndex === index ? "100%" : "80%",
                             transition: "0.5s all",
                             transform: activeIndex === index ? "scaleY(100%)" : "scaleY(70%)",
-                        }} src={image} alt={`${index}`} />
+                        }} src={image} alt={`${index}`} height={100} width={100} />
                     </IconButton>
                 ))}
             </Box>

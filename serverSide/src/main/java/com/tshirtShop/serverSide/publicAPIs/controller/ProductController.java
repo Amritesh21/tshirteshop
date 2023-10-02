@@ -9,6 +9,7 @@ import com.tshirtShop.serverSide.publicAPIs.repository.UploadPublicImageRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -39,7 +40,7 @@ public class ProductController {
         productList.setProductCategory(productCategory);
         productList.setProductDescription(productDescription);
         productList.setProductPrice(productPrice);
-        productList.setUsername(userName);
+        productList.setUsername(SecurityContextHolder.getContext().getAuthentication().getName());
         productList.setColors(colorsArray);
         productList.setSizes(selectSizes);
         productList.setTotalStockPresent(totalStock);
@@ -62,8 +63,9 @@ public class ProductController {
         return ResponseEntity.ok().body("Product added successfully");
     }
 
-    @GetMapping(value = "/api/auth/seller/get/all/products/meta/{username}")
-    public List<NewProductDTO> getAllMyUploadedProducts(@PathVariable String username) {
+    @GetMapping(value = "/api/auth/seller/get/all/products/meta")
+    public List<NewProductDTO> getAllMyUploadedProducts() {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
         List<ProductList> productLists = uploadPublicImageRepo.fetchAllProductImage(username);
         List<NewProductDTO> getProductDTO = productLists.stream().map(p -> {
             NewProductDTO newProductDTO = new NewProductDTO();
@@ -92,10 +94,11 @@ public class ProductController {
             return newProductDTO;
     }
 
-    @GetMapping(value = "/api/public/get/thumbNail/{username}/{productId}", produces = MediaType.IMAGE_JPEG_VALUE)
-    public byte[] getMyProductsThumbNail(@PathVariable String username, @PathVariable Long productId) {
-        return uploadPublicImageRepo.fetchProductThumbNail(username, productId);
-    }
+//    @GetMapping(value = "/api/auth/seller/get/thumbNail/{productId}", produces = MediaType.IMAGE_JPEG_VALUE)
+//    public byte[] getMyProductsThumbNailByUsername(@PathVariable Long productId) {
+//        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+//        return uploadPublicImageRepo.fetchProductThumbNail(username, productId);
+//    }
 
     @GetMapping(value = "/api/public/get/product/images/meta/{productId}")
     public List<Long> getProductImageMeta(@PathVariable Long productId) {

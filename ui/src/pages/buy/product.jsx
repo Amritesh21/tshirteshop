@@ -10,6 +10,7 @@ import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 import { LoginContext } from "@/contexts/loginContext";
+import { authFetcher, imageFetcher, publicFetcher } from "@/utilities/baseFetcher";
 
 const { Box, Typography, Grid, IconButton, Button, Avatar, TextField, InputAdornment } = require("@mui/material")
 
@@ -39,10 +40,8 @@ const BuyProduct = () => {
         if (!loginState?.username) {
             router.push("/login");
         }
-        const url = `${baseURL}api/auth/buyer/add/${productId}?${new URLSearchParams(params).toString()}`;
-        axios.post(url,{}, {headers: {
-            "Auth-Token": loginState?.authToken
-        }}).then((response) => {
+        const url = `api/auth/buyer/add/${productId}?${new URLSearchParams(params).toString()}`;
+        authFetcher(url,{method: "POST", body: JSON.stringify({})}).then((response) => {
             if(response.status >= 200 && response.status <= 210) {
                 router.push("/orderCart");
             }
@@ -51,29 +50,29 @@ const BuyProduct = () => {
 
     useEffect(() => {
         if (!productId) { return; }
-        axios.get(`${baseURL}api/public/get/product/meta/${productId}`)
+        publicFetcher(`api/public/get/product/meta/${productId}`)
+        .then((response) => response.json())
         .then((response) => {
             setProductDetailsMeta({
-                ...response.data,
-                colorsArray: response.data.colorsArray.map((color) => color.replaceAll("[", "").replaceAll('"',"").replaceAll("]","")),
-                selectSizes: response.data.selectSizes.map((size) => size.replaceAll("[", "").replaceAll('"',"").replaceAll("]","")),
+                ...response,
+                colorsArray: response.colorsArray.map((color) => color.replaceAll("[", "").replaceAll('"',"").replaceAll("]","")),
+                selectSizes: response.selectSizes.map((size) => size.replaceAll("[", "").replaceAll('"',"").replaceAll("]","")),
             })
         });
-        axios.get(`${baseURL}api/public/get/product/images/meta/${productId}`)
+        publicFetcher(`api/public/get/product/images/meta/${productId}`)
+        .then((response) => response.json())
         .then((response) => {
-            setProductImageListMeta(response.data);
+            setProductImageListMeta(response);
         })
     }, [productId]);
 
     useEffect(() => {
         if (!productImageListMeta.length) {return;}
+        const imageListMeta = [];
         productImageListMeta.forEach(async (productImageId) => {
-            await fetch(`${baseURL}api/public/get/product/image/${productImageId}`)
-            .then(response => response?.blob())
-            .then(imageBlob => {
-                setProductImageArray((preval) => [...preval, imageBlob]);
-            })
+            imageListMeta.push(imageFetcher(`api/public/get/product/image/${productImageId}`));
         })
+        setProductImageArray(imageListMeta);
     }, [productImageListMeta]);
 
     useEffect(() => {
@@ -98,11 +97,11 @@ const BuyProduct = () => {
                                         height: "500px",
                                         width: "500px",
                                     }}>
-                                        <img src={productImageArray[selectedImage] && URL.createObjectURL(productImageArray[selectedImage])} style={{ height: "100%", width: "100%", position: "relative" }} />
+                                        <img src={productImageArray[selectedImage] && productImageArray[selectedImage]} style={{ height: "100%", width: "100%", position: "relative" }} />
                                     </Box>
                                 </Box>
                             </Grid>
-                        <SliderComponent imageArr={productImageArray.map((image) => URL.createObjectURL(image))} setSelectedImage={setSelectedImage} setImageArr={setProductImageArray} />
+                        <SliderComponent imageArr={productImageArray} setSelectedImage={setSelectedImage} setImageArr={setProductImageArray} />
                     </Grid>}
                 </Grid>
                 <Grid item md={6} sx={{ padding: "20px" }}>

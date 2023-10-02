@@ -5,6 +5,8 @@ import { textFieldStyle } from "./styleConstants";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { LoginContext } from "@/contexts/loginContext";
+import { publicFetcher } from "@/utilities/baseFetcher";
+import { UserDetailsClass } from "@/utilities/UserDetailsClass";
 
 export const LoginComponent = () => {
 
@@ -19,17 +21,24 @@ export const LoginComponent = () => {
 
     useEffect(() => {
         if (!payLoad?.username || !payLoad?.password) { return; }
-        axios.post("api/public/user/login", payLoad).then((response) => {
-            if (response.data.logInMessage === 'Authentication successful') {
-                setLoginState({
-                    firstName: response.data.firstName,
-                    lastName: response.data.lastName,
-                    username: response.data.username,
-                    authToken: response.headers[`auth-token`],
-                    userType: response.data.userType
-                });
-                sessionStorage.setItem("auth-token", response.headers[`auth-token`]);
-                sessionStorage.setItem("userDetails", JSON.stringify(response.data))
+        const userLoginObj = new UserDetailsClass();
+        publicFetcher("api/public/user/login", {
+            method: "POST",
+            body: JSON.stringify(payLoad)
+        }).then((response) => {
+            console.log(response.headers.get('Auth-Token'));
+            userLoginObj.setAuthToken(response.headers.get('Auth-Token'));
+            sessionStorage.setItem("auth-token", response.headers.get('Auth-Token'));
+            return response.json();
+        }).then((response) => {
+            console.log(response)
+            if (response.logInMessage === 'Authentication successful') {
+                userLoginObj.setFirstName(response.firstName);
+                userLoginObj.setLastName(response.lastName);
+                userLoginObj.setUserName(response.username);
+                userLoginObj.setUserType(response.userType);
+                setLoginState(userLoginObj.getUserLoginObj());
+                sessionStorage.setItem("userDetails", JSON.stringify(userLoginObj.getUserLoginObj()))
                 router.push("/");
             } else {
                 alert("Invalied credentials error");

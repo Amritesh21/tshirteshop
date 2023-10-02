@@ -1,5 +1,6 @@
 import { OrderProductView } from "@/components/orderProductView";
 import { LoginContext } from "@/contexts/loginContext";
+import { authFetcher } from "@/utilities/baseFetcher";
 import { Box, Grid, Typography } from "@mui/material";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
@@ -11,24 +12,20 @@ const MyOrders = () => {
 
     useEffect(() => {
         if (!loginState) { return; }
-        axios.get(`http://localhost/api/auth/buyer/get/all/my/orders`, {
-            headers: {
-                "auth-token": loginState?.authToken
-            }
-        }).then((response) => setOrdersMeta(response.data));
+        authFetcher(`api/auth/buyer/get/all/my/orders`)
+        .then((response) => response.json())
+        .then((response) => setOrdersMeta(response));
     },[loginState]);
 
     const cancelOrder = (orderId) => {
-      axios.delete(`http://localhost/api/auth/buyer/order/cancel?orderId=${orderId}`, {
-            headers: {
-                "auth-token": loginState?.authToken
-            }
-        }).then((response) => {
-          axios.get(`http://localhost/api/auth/buyer/get/all/my/orders`, {
-            headers: {
-                "auth-token": loginState?.authToken
-            }
-        }).then((response) => setOrdersMeta(response.data));
+      authFetcher(`api/auth/buyer/order/cancel?orderId=${orderId}`, {
+          method: "DELETE",
+          body: JSON.stringify({})
+        })
+        .then((response) => {
+          authFetcher(`api/auth/buyer/get/all/my/orders`)
+          .then((response) => response.json())
+          .then((response) => setOrdersMeta(response));
         });
     }
 

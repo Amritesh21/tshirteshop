@@ -20,7 +20,6 @@ const categoryMetaData = [
 const Shop = () => {
     const { loginState } = useContext(LoginContext);
     const router = useRouter();
-    console.log(loginState);
 
     const [selectedCategory, setSelectedCategory] = useState("T-Shirt");
 
