@@ -1,7 +1,9 @@
 package com.ecommerce.inventoryservice.controller;
 
+import com.ecommerce.inventoryservice.constants.ProductDetailsControllerMessages;
+import com.ecommerce.inventoryservice.dto.ErrorResponseDTO;
+import com.ecommerce.inventoryservice.dto.ProductDetailsAddedDTO;
 import com.ecommerce.inventoryservice.dto.ProductDetailsDTO;
-import com.ecommerce.inventoryservice.entity.Product;
 import com.ecommerce.inventoryservice.service.ProductDetailsService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,12 +23,16 @@ public class ProductDetailsController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Boolean> createProduct(@RequestBody ProductDetailsDTO productDetailsDTO) {
-        boolean productCreated = productDetailsService.createProduct(productDetailsDTO);
-        if (productCreated) {
-            return new ResponseEntity<Boolean>(true, HttpStatus.CREATED);
+    public ResponseEntity<ProductDetailsAddedDTO> createProduct(@RequestBody ProductDetailsDTO productDetailsDTO) {
+        String productCreated = productDetailsService.createProduct(productDetailsDTO);
+        if (productCreated != null && !productCreated.isEmpty()) {
+            ProductDetailsAddedDTO productDetailsAddedDTO =
+                    new ProductDetailsAddedDTO(ProductDetailsControllerMessages.PRODUCT_DETAILS_ADDED_SUCCESSFULLY, productCreated);
+            return new ResponseEntity<>(productDetailsAddedDTO, HttpStatus.CREATED);
         } else {
-            return new ResponseEntity<Boolean>(false, HttpStatus.BAD_GATEWAY);
+            ProductDetailsAddedDTO productDetailsAddedDTO =
+                    new ProductDetailsAddedDTO(ProductDetailsControllerMessages.UNABLE_TO_ADD_PRODUCT_DETAILS, null);
+            return new ResponseEntity<>(productDetailsAddedDTO, HttpStatus.BAD_REQUEST);
         }
     }
 

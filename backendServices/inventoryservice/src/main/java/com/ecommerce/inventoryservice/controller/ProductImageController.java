@@ -25,7 +25,6 @@ public class ProductImageController {
                                                    @RequestParam String imageName,
                                                    @RequestParam MultipartFile imageFile
                                                    ) {
-        // TODO:  do some research on multipartFiles
         ProductImageDTO productImageDTO = ProductImageDTO
                 .builder()
                 .imageFile(imageFile)

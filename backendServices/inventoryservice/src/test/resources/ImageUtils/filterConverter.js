@@ -83,7 +83,7 @@ document.getElementById("imageUpload").addEventListener("click", async (event) =
 
     const file = document.getElementById("fileUploader").files[0];
     const formData = new FormData();
-    formData.append("productId", "1");
+    formData.append("productId", "tshirt1_2025-09-09T19:08:54.113582");
     formData.append("imageName", file.name);
     formData.append("imageFile", file);
     const response = await addImage(formData);

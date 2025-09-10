@@ -27,6 +27,7 @@ public class ProductDetailsMapper {
         product.setCreatedOn(LocalDateTime.now());
         product.setImage(new ArrayList<>());
         product.setThumbnail("");
+        product.setProductId(productDetailsDTO.getProductName() + "_" + product.getCreatedOn());
         return mapProductDTOtoEntity(productDetailsDTO, product);
     }
 

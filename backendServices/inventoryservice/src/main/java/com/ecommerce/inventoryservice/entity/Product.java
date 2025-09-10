@@ -13,6 +13,8 @@ public class Product {
 
     String productName;
 
+    String productId;
+
     String description;
 
     String category;
@@ -137,5 +139,13 @@ public class Product {
 
     public void setPublished(boolean published) {
         this.published = published;
+    }
+
+    public String getProductId() {
+        return productId;
+    }
+
+    public void setProductId(String productId) {
+        this.productId = productId;
     }
 }
