@@ -73,7 +73,7 @@
 
 
 function addImage(formData) {
-    return fetch("http://localhost:8080/api/inventory/product/image/add", {
+    return fetch("http://localhost:8081/api/inventory/product/image/add", {
         method: "POST",
         body: formData
     });

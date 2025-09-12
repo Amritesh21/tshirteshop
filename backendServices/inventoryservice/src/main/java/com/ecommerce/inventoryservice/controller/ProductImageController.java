@@ -21,9 +21,11 @@ public class ProductImageController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Boolean> addProductImage(@RequestParam String productId,
-                                                   @RequestParam String imageName,
-                                                   @RequestParam MultipartFile imageFile
+    public ResponseEntity<Boolean> addProductImage(
+                                                    @RequestParam("totalImages") int totalImages,
+                                                    @RequestParam String productId,
+                                                    @RequestParam String imageName,
+                                                    @RequestParam MultipartFile imageFile
                                                    ) {
         ProductImageDTO productImageDTO = ProductImageDTO
                 .builder()
@@ -31,7 +33,7 @@ public class ProductImageController {
                 .productId(productId)
                 .imageName(imageName)
                 .build();
-        boolean addedImageFlag = productImageService.addImageForAProduct(productImageDTO);
+        boolean addedImageFlag = productImageService.addImageForAProduct(productImageDTO, totalImages);
         if (addedImageFlag) {
             return new ResponseEntity<Boolean>(true, HttpStatus.CREATED);
         } else {

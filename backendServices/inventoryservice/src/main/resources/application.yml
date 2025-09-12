@@ -5,6 +5,24 @@ spring:
     mongodb:
       uri: "mongodb+srv://amrit:indira@cluster0.8saiim6.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
       database: "tshirtshop"
+  kafka:
+    bootstrap-servers: "localhost:9092"
+    consumer:
+      group-id: "inventoryManager_2"
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring:
+          json:
+            trusted.packages: "*"
+      producer:
+        key-serializer: org.apache.kafka.common.serialization.StringSerializer
+        value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
 logging:
   level:
     com.ecommerce.inventoryservice: TRACE
+#    com.messaging.kafka: INFO
+
+server:
+  port: 8081
