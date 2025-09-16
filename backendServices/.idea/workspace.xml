@@ -5,24 +5,39 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="70d6e189-0410-477a-9610-9a678c9324ee" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/inventoryservice/src/main/java/com/ecommerce/inventoryservice/constants/ExceptionMessages.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/inventoryservice/src/main/java/com/ecommerce/inventoryservice/constants/ProductDetailsControllerMessages.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/inventoryservice/src/main/java/com/ecommerce/inventoryservice/dto/ErrorResponseDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/inventoryservice/src/main/java/com/ecommerce/inventoryservice/dto/ProductDetailsAddedDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/inventoryservice/src/main/java/com/ecommerce/inventoryservice/exceptions/ErrorOccurredWhileCreatingDirectory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/inventoryservice/src/main/java/com/ecommerce/inventoryservice/exceptions/ErrorOccurredWhileSavingImageFile.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/inventoryservice/src/main/java/com/ecommerce/inventoryservice/exceptions/GlobalExceptionHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/inventoryservice/src/main/java/com/ecommerce/inventoryservice/exceptions/ProductAlreadyExistsException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/inventoryservice/src/main/java/com/ecommerce/inventoryservice/constants/Category.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/inventoryservice/src/main/java/com/ecommerce/inventoryservice/dto/productMetaData/ClothProductMetaDataDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/inventoryservice/src/main/java/com/ecommerce/inventoryservice/dto/productMetaData/CompleteProductMetaDataDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/inventoryservice/src/main/java/com/ecommerce/inventoryservice/dto/productMetaData/CosmeticProductMetaDataDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/inventoryservice/src/main/java/com/ecommerce/inventoryservice/dto/productMetaData/ProductMetaDataDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/inventoryservice/src/main/java/com/ecommerce/inventoryservice/dto/productMetaData/ProductUpdatedAndPublishedDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/inventoryservice/src/main/java/com/ecommerce/inventoryservice/entity/ClothProduct.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/inventoryservice/src/main/java/com/ecommerce/inventoryservice/entity/CosmeticProduct.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/inventoryservice/src/main/java/com/ecommerce/inventoryservice/exceptions/ImageFileAlreadyExistsException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/inventoryservice/src/main/java/com/ecommerce/inventoryservice/exceptions/ImageFileNotFoundException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/inventoryservice/src/main/java/com/ecommerce/inventoryservice/exceptions/InvalidProductIdException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/inventoryservice/src/main/java/com/ecommerce/inventoryservice/utils/ProductDTOtoEntityMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/inventoryservice/src/main/java/com/ecommerce/inventoryservice/utils/ProductEntityToDTOMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/inventoryservice/src/main/java/com/ecommerce/inventoryservice/utils/ProductImageUtils.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/inventoryservice/src/main/java/com/ecommerce/inventoryservice/InventoryserviceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/inventoryservice/src/main/java/com/ecommerce/inventoryservice/InventoryserviceApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/inventoryservice/src/main/java/com/ecommerce/inventoryservice/controller/ProductDetailsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/inventoryservice/src/main/java/com/ecommerce/inventoryservice/controller/ProductDetailsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inventoryservice/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/inventoryservice/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inventoryservice/src/main/java/com/ecommerce/inventoryservice/constants/ExceptionMessages.java" beforeDir="false" afterPath="$PROJECT_DIR$/inventoryservice/src/main/java/com/ecommerce/inventoryservice/constants/ExceptionMessages.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inventoryservice/src/main/java/com/ecommerce/inventoryservice/controller/ProductDetailsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/inventoryservice/src/main/java/com/ecommerce/inventoryservice/controller/ProductController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/inventoryservice/src/main/java/com/ecommerce/inventoryservice/controller/ProductImageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/inventoryservice/src/main/java/com/ecommerce/inventoryservice/controller/ProductImageController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inventoryservice/src/main/java/com/ecommerce/inventoryservice/dto/ErrorResponseDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/inventoryservice/src/main/java/com/ecommerce/inventoryservice/dto/error/ErrorResponseDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inventoryservice/src/main/java/com/ecommerce/inventoryservice/dto/ProductDetailsAddedDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/inventoryservice/src/main/java/com/ecommerce/inventoryservice/dto/productMetaData/ProductCreatedDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inventoryservice/src/main/java/com/ecommerce/inventoryservice/dto/ProductDetailsDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/inventoryservice/src/main/java/com/ecommerce/inventoryservice/dto/ProductImageDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/inventoryservice/src/main/java/com/ecommerce/inventoryservice/dto/productImage/ProductImageDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/inventoryservice/src/main/java/com/ecommerce/inventoryservice/entity/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/inventoryservice/src/main/java/com/ecommerce/inventoryservice/entity/Product.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inventoryservice/src/main/java/com/ecommerce/inventoryservice/entity/ProductImage.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/inventoryservice/src/main/java/com/ecommerce/inventoryservice/exceptions/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/inventoryservice/src/main/java/com/ecommerce/inventoryservice/exceptions/GlobalExceptionHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/inventoryservice/src/main/java/com/ecommerce/inventoryservice/repository/ProductDetailsRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/inventoryservice/src/main/java/com/ecommerce/inventoryservice/repository/ProductDetailsRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inventoryservice/src/main/java/com/ecommerce/inventoryservice/repository/ProductImageRepository.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/inventoryservice/src/main/java/com/ecommerce/inventoryservice/service/ProductDetailsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/inventoryservice/src/main/java/com/ecommerce/inventoryservice/service/ProductDetailsService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inventoryservice/src/main/java/com/ecommerce/inventoryservice/service/ProductImageService.java" beforeDir="false" afterPath="$PROJECT_DIR$/inventoryservice/src/main/java/com/ecommerce/inventoryservice/service/ProductImageService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/inventoryservice/src/main/java/com/ecommerce/inventoryservice/service/impl/ProductDetailsServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/inventoryservice/src/main/java/com/ecommerce/inventoryservice/service/impl/ProductDetailsServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/inventoryservice/src/main/java/com/ecommerce/inventoryservice/service/impl/ProductImageServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/inventoryservice/src/main/java/com/ecommerce/inventoryservice/service/impl/ProductImageServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/inventoryservice/src/main/java/com/ecommerce/inventoryservice/utils/ProductDetailsMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/inventoryservice/src/main/java/com/ecommerce/inventoryservice/utils/ProductDetailsMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inventoryservice/src/main/java/com/ecommerce/inventoryservice/utils/ProductDetailsMapper.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/inventoryservice/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/inventoryservice/src/main/resources/application.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/inventoryservice/src/test/resources/ImageUtils/filterConverter.js" beforeDir="false" afterPath="$PROJECT_DIR$/inventoryservice/src/test/resources/ImageUtils/filterConverter.js" afterDir="false" />
     </list>
@@ -36,10 +51,10 @@
       <list>
         <option value="HTML File" />
         <option value="Interface" />
+        <option value="Enum" />
+        <option value="Record" />
         <option value="Exception" />
         <option value="Class" />
-        <option value="Record" />
-        <option value="Enum" />
       </list>
     </option>
   </component>
@@ -110,6 +125,11 @@
           <properties class="com.ecommerce.inventoryservice.exceptions.ProductAlreadyExistsException" package="com.ecommerce.inventoryservice.exceptions" />
           <option name="timeStamp" value="4" />
         </breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/inventoryservice/src/main/java/com/ecommerce/inventoryservice/service/impl/ProductImageServiceImpl.java</url>
+          <line>41</line>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>

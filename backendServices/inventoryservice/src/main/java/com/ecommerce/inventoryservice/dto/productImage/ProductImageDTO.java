@@ -1,4 +1,4 @@
-package com.ecommerce.inventoryservice.dto;
+package com.ecommerce.inventoryservice.dto.productImage;
 
 import lombok.Builder;
 import lombok.Getter;

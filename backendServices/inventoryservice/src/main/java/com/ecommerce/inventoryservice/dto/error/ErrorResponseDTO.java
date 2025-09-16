@@ -1,4 +1,4 @@
-package com.ecommerce.inventoryservice.dto;
+package com.ecommerce.inventoryservice.dto.error;
 
 import lombok.Builder;
 import lombok.Getter;

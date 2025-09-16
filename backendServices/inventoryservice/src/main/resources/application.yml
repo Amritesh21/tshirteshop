@@ -7,4 +7,6 @@ spring:
       database: "tshirtshop"
 logging:
   level:
-    com.ecommerce.inventoryservice: TRACE
+    com.ecommerce.inventoryservice: DEBUG
+    org.springframework.data.mongodb.core.MongoTemplate: DEBUG
+    org.mongodb.driver.protocol.command: DEBUG

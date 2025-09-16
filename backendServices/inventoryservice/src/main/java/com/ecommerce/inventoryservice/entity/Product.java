@@ -1,6 +1,7 @@
 package com.ecommerce.inventoryservice.entity;
 
 import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
@@ -9,17 +10,16 @@ import java.util.List;
 @Document
 public class Product {
 
-    ObjectId objectId;
+    @Id
+    String productId;
 
     String productName;
-
-    String productId;
 
     String description;
 
     String category;
 
-    List<String> colors;
+    Long maxPurchaseLimit;
 
     Long price;
 
@@ -31,19 +31,11 @@ public class Product {
 
     LocalDateTime lastUpdatedOn;
 
-    List<ProductImage> image;
+    List<String> image;
 
     String thumbnail;
 
     boolean published;
-
-    public ObjectId getObjectId() {
-        return objectId;
-    }
-
-    public void setObjectId(ObjectId objectId) {
-        this.objectId = objectId;
-    }
 
     public String getProductName() {
         return productName;
@@ -67,14 +59,6 @@ public class Product {
 
     public void setCategory(String category) {
         this.category = category;
-    }
-
-    public List<String> getColors() {
-        return colors;
-    }
-
-    public void setColors(List<String> colors) {
-        this.colors = colors;
     }
 
     public Long getPrice() {
@@ -117,11 +101,11 @@ public class Product {
         this.lastUpdatedOn = lastUpdatedOn;
     }
 
-    public List<ProductImage> getImage() {
+    public List<String> getImage() {
         return image;
     }
 
-    public void setImage(List<ProductImage> image) {
+    public void setImage(List<String> image) {
         this.image = image;
     }
 
@@ -147,5 +131,13 @@ public class Product {
 
     public void setProductId(String productId) {
         this.productId = productId;
+    }
+
+    public Long getMaxPurchaseLimit() {
+        return maxPurchaseLimit;
+    }
+
+    public void setMaxPurchaseLimit(Long maxPurchaseLimit) {
+        this.maxPurchaseLimit = maxPurchaseLimit;
     }
 }
