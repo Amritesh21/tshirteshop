@@ -7,6 +7,4 @@ public interface EStoreUserAccessService {
 
     boolean loginUser(LoginDTO loginDTO);
 
-    boolean signupUser(UserDetailsDTO userDetailsDTO);
-
 }

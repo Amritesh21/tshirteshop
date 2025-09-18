@@ -19,10 +19,10 @@ public class SecurityFilterConfig {
     SecurityFilterChain configureSecurityFilterChain(HttpSecurity httpSecurity) {
         try {
             return httpSecurity.authorizeHttpRequests((request) ->
-                    request.requestMatchers("/api/user/create", "/api/user/signup", "/api/user/login")
+                    request.requestMatchers("/api/user/create", "/api/user/signup", "/api/user/login", "/login/index.html", "oauth2/authorization/google", "/.well-known/**")
                             .permitAll()
-                            .anyRequest().permitAll()
-            ).csrf(x -> x.disable()).build();
+                            .anyRequest().authenticated()
+            ).oauth2Login(x -> x.defaultSuccessUrl("/api/user/login")).csrf(x -> x.disable()).build();
 
         } catch (Exception e) {
             throw new RuntimeException(e);

@@ -11,10 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/user")
@@ -44,15 +41,14 @@ public class UserAccessController {
         }
     }
 
-    @RequestMapping("/login")
-    public String getLoginPage(@RequestBody LoginDTO loginDTO) {
-        Authentication authentication = new UsernamePasswordAuthenticationToken(loginDTO.getUsername(), loginDTO.getPassword());
-        Authentication validatedAuth = eStoreAuthenticationProvider.authenticate(authentication);
-        if (validatedAuth.isAuthenticated()) {
-            return "Authentication successful";
-        } else {
-            return "Authentication unsuccessful";
-        }
+    @PostMapping("/login")
+    public boolean getLoginPage(@RequestBody LoginDTO loginDTO) {
+        return eStoreUserAccessService.loginUser(loginDTO);
+    }
+
+    @GetMapping("/login")
+    public boolean getLoginPage2() {
+        return true;
     }
 
 }
