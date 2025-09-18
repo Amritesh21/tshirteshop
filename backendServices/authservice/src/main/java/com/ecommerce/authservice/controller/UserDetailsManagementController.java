@@ -18,15 +18,15 @@ public class UserDetailsManagementController {
         this.eStoreUserDetailsService = eStoreUserDetailsService;
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<Boolean> createNewUser(@RequestBody UserDetailsDTO userDetailsDTO) {
-        boolean userCreated = eStoreUserDetailsService.createNewUser(userDetailsDTO);
-        if (userCreated) {
-            return new ResponseEntity<>(userCreated, HttpStatus.CREATED);
-        } else {
-            return new ResponseEntity<>(userCreated, HttpStatus.BAD_REQUEST);
-        }
-    }
+//    @PostMapping("/create")
+//    public ResponseEntity<Boolean> createNewUser(@RequestBody UserDetailsDTO userDetailsDTO) {
+//        boolean userCreated = eStoreUserDetailsService.createNewUser(userDetailsDTO);
+//        if (userCreated) {
+//            return new ResponseEntity<>(userCreated, HttpStatus.CREATED);
+//        } else {
+//            return new ResponseEntity<>(userCreated, HttpStatus.BAD_REQUEST);
+//        }
+//    }
 
     @PutMapping("/update")
     public ResponseEntity<Boolean> updateUser(@RequestBody UserDetailsDTO userDetailsDTO) {
