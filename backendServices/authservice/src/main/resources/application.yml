@@ -8,3 +8,10 @@ spring:
           google:
             clientId: 364545568733-2k2clfsj4g0va4ies2f3fsuohao3q51s.apps.googleusercontent.com
             clientSecret: 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
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+server:
+  port: 8081
+
