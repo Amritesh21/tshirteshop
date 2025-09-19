@@ -1,0 +1,3 @@
+docker build -t uiimage:v1 .
+
+docker run -d -p 8069:80 uiimage:v1

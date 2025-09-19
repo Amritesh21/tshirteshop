@@ -31,6 +31,10 @@ public class GatewayserverApplication {
                         .filters(f -> f.rewritePath("/auth/(?<segment>.*)", "/${segment}"))
                         .uri("lb://AUTHSERVICE")
                 )
+                .route(x -> x.path("/ui/**")
+                        .filters(f -> f.rewritePath("/ui/(?<segment>.*)", "/${segment}"))
+                        .uri("http://localhost:8069")
+                )
                 .build();
 
     }

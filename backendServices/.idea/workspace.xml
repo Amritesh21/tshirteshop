@@ -4,24 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="70d6e189-0410-477a-9610-9a678c9324ee" name="Changes" comment="OAuth2 social login implementation">
-      <change afterPath="$PROJECT_DIR$/discoveryserver/src/main/resources/application.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gatewayserver/src/main/java/com/ecommerce/gatewayserver/config/SecurityConfiguration.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gatewayserver/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="70d6e189-0410-477a-9610-9a678c9324ee" name="Changes" comment="service discovery and gateway server implementation">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/authservice/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/authservice/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/authservice/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/authservice/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gatewayserver/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/gatewayserver/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gatewayserver/src/main/java/com/ecommerce/gatewayserver/GatewayserverApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/gatewayserver/src/main/java/com/ecommerce/gatewayserver/GatewayserverApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gatewayserver/src/main/resources/application.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/inventoryservice/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/inventoryservice/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/inventoryservice/src/main/java/com/ecommerce/inventoryservice/controller/ProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/inventoryservice/src/main/java/com/ecommerce/inventoryservice/controller/ProductController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/inventoryservice/src/main/java/com/ecommerce/inventoryservice/controller/ProductImageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/inventoryservice/src/main/java/com/ecommerce/inventoryservice/controller/ProductImageController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/inventoryservice/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/inventoryservice/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/orderservice/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/orderservice/src/main/resources/application.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -175,7 +160,15 @@
       <option name="project" value="LOCAL" />
       <updated>1758193808290</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="service discovery and gateway server implementation">
+      <option name="closed" value="true" />
+      <created>1758266731386</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1758266731386</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -191,7 +184,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="OAuth2 social login implementation" />
-    <option name="LAST_COMMIT_MESSAGE" value="OAuth2 social login implementation" />
+    <MESSAGE value="service discovery and gateway server implementation" />
+    <option name="LAST_COMMIT_MESSAGE" value="service discovery and gateway server implementation" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
