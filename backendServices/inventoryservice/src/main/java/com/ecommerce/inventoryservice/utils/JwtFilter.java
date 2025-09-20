@@ -1,6 +1,5 @@
 package com.ecommerce.inventoryservice.utils;
 
-import com.ecommerce.commoncode.utils.JwtHelper;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

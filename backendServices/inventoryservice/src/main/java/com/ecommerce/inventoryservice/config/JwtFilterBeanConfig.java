@@ -1,6 +1,6 @@
 package com.ecommerce.inventoryservice.config;
 
-import com.ecommerce.commoncode.utils.JwtHelper;
+import com.ecommerce.inventoryservice.utils.JwtHelper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

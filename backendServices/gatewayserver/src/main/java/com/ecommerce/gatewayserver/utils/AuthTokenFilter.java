@@ -1,6 +1,5 @@
 package com.ecommerce.gatewayserver.utils;
 
-import com.ecommerce.commoncode.utils.JwtHelper;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

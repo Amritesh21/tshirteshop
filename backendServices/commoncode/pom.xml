@@ -6,12 +6,12 @@
         <groupId>com.ecommerce</groupId>
         <artifactId>ecommerce-parent</artifactId>
         <version>0.0.1-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>commoncode</artifactId>
     <name>commoncode</name>
     <description>This module contains common code</description>
+    <packaging>jar</packaging>
     <url/>
     <licenses>
         <license/>
