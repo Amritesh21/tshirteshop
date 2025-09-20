@@ -1,4 +1,4 @@
-package com.ecommerce.authservice.service.iml;
+package com.ecommerce.authservice.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;

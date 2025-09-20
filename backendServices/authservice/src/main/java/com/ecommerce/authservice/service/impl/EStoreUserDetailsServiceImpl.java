@@ -1,4 +1,4 @@
-package com.ecommerce.authservice.service.iml;
+package com.ecommerce.authservice.service.impl;
 
 import com.ecommerce.authservice.constants.ExceptionMessages;
 import com.ecommerce.authservice.dto.UserDetailsDTO;

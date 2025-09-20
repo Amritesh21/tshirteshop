@@ -5,8 +5,33 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="70d6e189-0410-477a-9610-9a678c9324ee" name="Changes" comment="service discovery and gateway server implementation">
+      <change afterPath="$PROJECT_DIR$/authservice/src/main/java/com/ecommerce/authservice/entity/LoginTokenEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/authservice/src/main/java/com/ecommerce/authservice/repository/EStoreLoginTokenRepo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/authservice/src/main/java/com/ecommerce/authservice/utils/jwts/JwtFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/authservice/src/main/java/com/ecommerce/authservice/utils/jwts/JwtHelper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/commoncode/src/main/java/com/ecommerce/commoncode/constants/AuthorityTypes.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/commoncode/src/main/java/com/ecommerce/commoncode/utils/JwtHelper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gatewayserver/src/main/java/com/ecommerce/gatewayserver/config/CommonCodeConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gatewayserver/src/main/java/com/ecommerce/gatewayserver/config/LoadBalancedWebClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gatewayserver/src/main/java/com/ecommerce/gatewayserver/utils/AuthTokenFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/inventoryservice/src/main/java/com/ecommerce/inventoryservice/config/JwtFilterBeanConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/inventoryservice/src/main/java/com/ecommerce/inventoryservice/config/SecurityConfiguration.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/inventoryservice/src/main/java/com/ecommerce/inventoryservice/utils/JwtFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gatewayserver/src/main/java/com/ecommerce/gatewayserver/GatewayserverApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/gatewayserver/src/main/java/com/ecommerce/gatewayserver/GatewayserverApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/authservice/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/authservice/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/authservice/src/main/java/com/ecommerce/authservice/config/SecurityFilterConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/authservice/src/main/java/com/ecommerce/authservice/config/SecurityFilterConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/authservice/src/main/java/com/ecommerce/authservice/controller/UserAccessController.java" beforeDir="false" afterPath="$PROJECT_DIR$/authservice/src/main/java/com/ecommerce/authservice/controller/UserAccessController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/authservice/src/main/java/com/ecommerce/authservice/service/EStoreUserAccessService.java" beforeDir="false" afterPath="$PROJECT_DIR$/authservice/src/main/java/com/ecommerce/authservice/service/EStoreUserAccessService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/authservice/src/main/java/com/ecommerce/authservice/service/iml/EStoreAuthenticationProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/authservice/src/main/java/com/ecommerce/authservice/service/impl/EStoreAuthenticationProvider.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/authservice/src/main/java/com/ecommerce/authservice/service/iml/EStoreUserAccessServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/authservice/src/main/java/com/ecommerce/authservice/service/impl/EStoreUserAccessServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/authservice/src/main/java/com/ecommerce/authservice/service/iml/EStoreUserDetailsManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/authservice/src/main/java/com/ecommerce/authservice/service/impl/EStoreUserDetailsManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/authservice/src/main/java/com/ecommerce/authservice/service/iml/EStoreUserDetailsServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/authservice/src/main/java/com/ecommerce/authservice/service/impl/EStoreUserDetailsServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gatewayserver/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/gatewayserver/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gatewayserver/src/main/java/com/ecommerce/gatewayserver/config/SecurityConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/gatewayserver/src/main/java/com/ecommerce/gatewayserver/config/SecurityConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inventoryservice/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/inventoryservice/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/orderservice/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/orderservice/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,18 +58,18 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "Amritesh21"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Amritesh21&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/Amritesh21/tshirteshop.git",
-    "accountId": "f71eb4df-37dd-4491-b58c-fcd5304ba760"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Amritesh21/tshirteshop.git&quot;,
+    &quot;accountId&quot;: &quot;f71eb4df-37dd-4491-b58c-fcd5304ba760&quot;
   }
-}]]></component>
+}</component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
@@ -60,24 +85,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.AuthserviceApplication.executor": "Run",
-    "Application.DiscoveryserverApplication.executor": "Run",
-    "Application.GatewayserverApplication.executor": "Run",
-    "Application.InventoryserviceApplication.executor": "Run",
-    "DefaultHtmlFileTemplate": "HTML File",
-    "Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/amriteshsingh/IdeaProjects/tshirteshop/backendServices/discoveryserver"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.AuthserviceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Application.DiscoveryserverApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Application.GatewayserverApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Application.InventoryserviceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/amriteshsingh/Documents/JAVA_Programs/projects/tshirteshop/backendServices&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/authservice/src/main/resources" />
     </key>
@@ -138,9 +166,9 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.GatewayserverApplication" />
+        <item itemvalue="Application.AuthserviceApplication" />
         <item itemvalue="Application.InventoryserviceApplication" />
         <item itemvalue="Application.DiscoveryserverApplication" />
-        <item itemvalue="Application.AuthserviceApplication" />
       </list>
     </recent_temporary>
   </component>
