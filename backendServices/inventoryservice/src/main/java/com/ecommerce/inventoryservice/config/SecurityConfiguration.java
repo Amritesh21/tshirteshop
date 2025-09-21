@@ -23,7 +23,7 @@ public class SecurityConfiguration {
         try {
             return httpSecurity.authorizeHttpRequests( requests ->
               requests.requestMatchers("/api/seller/**").hasAuthority("SELLER").anyRequest().authenticated()
-            ).addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class).build();
+            ).csrf(x -> x.disable()).addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class).build();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

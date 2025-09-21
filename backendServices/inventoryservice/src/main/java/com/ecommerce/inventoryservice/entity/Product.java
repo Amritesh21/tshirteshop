@@ -37,6 +37,8 @@ public class Product {
 
     boolean published;
 
+    String sellerUsername;
+
     public String getProductName() {
         return productName;
     }
@@ -139,5 +141,13 @@ public class Product {
 
     public void setMaxPurchaseLimit(Long maxPurchaseLimit) {
         this.maxPurchaseLimit = maxPurchaseLimit;
+    }
+
+    public String getSellerUsername() {
+        return sellerUsername;
+    }
+
+    public void setSellerUsername(String sellerUsername) {
+        this.sellerUsername = sellerUsername;
     }
 }
