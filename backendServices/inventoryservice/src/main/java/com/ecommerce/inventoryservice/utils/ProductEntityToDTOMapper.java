@@ -8,6 +8,7 @@ import com.ecommerce.inventoryservice.dto.productMetaData.ProductMetaDataDTO;
 import com.ecommerce.inventoryservice.entity.ClothProduct;
 import com.ecommerce.inventoryservice.entity.CosmeticProduct;
 import com.ecommerce.inventoryservice.entity.Product;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;

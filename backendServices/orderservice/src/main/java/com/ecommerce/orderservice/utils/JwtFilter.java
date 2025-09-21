@@ -1,4 +1,4 @@
-package com.ecommerce.inventoryservice.utils;
+package com.ecommerce.orderservice.utils;
 
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
@@ -34,7 +34,7 @@ public class JwtFilter extends OncePerRequestFilter {
             Claims claims = jwtHelper.parseJwt(bearerToken);
             String username = jwtHelper.getUsername(claims);
             List<GrantedAuthority> authorityList = jwtHelper.getAuthorities(claims);
-            UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(username, null, authorityList);
+            UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(username, bearerToken, authorityList);
             SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
         }
         filterChain.doFilter(request, response);

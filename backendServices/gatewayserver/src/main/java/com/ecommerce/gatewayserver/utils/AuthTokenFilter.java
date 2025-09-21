@@ -1,6 +1,5 @@
 package com.ecommerce.gatewayserver.utils;
 
-import com.ecommerce.commoncode.utils.JwtHelper;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -31,7 +30,6 @@ public class AuthTokenFilter implements WebFilter {
         String username = jwtHelper.getUsername(claims);
         List<GrantedAuthority> authorities = jwtHelper.getAuthorities(claims);
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(username, null, authorities);
-        // SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
         return usernamePasswordAuthenticationToken;
     }
 
@@ -45,10 +43,8 @@ public class AuthTokenFilter implements WebFilter {
                     .retrieve()
                     .bodyToMono(String.class)
                     .flatMap(x -> {
-                        System.out.println(x);
                         if (!ObjectUtils.isEmpty(x)) {
                             UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = setupSecurityContext(x);
-
                             exchange.getRequest().getHeaders().add("Bearer-Token", x);
                             exchange.getRequest().getHeaders().remove("Auth-Token");
                            return chain.filter(exchange).contextWrite(ReactiveSecurityContextHolder.withAuthentication(usernamePasswordAuthenticationToken));

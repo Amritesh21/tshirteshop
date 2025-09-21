@@ -9,6 +9,7 @@ import com.ecommerce.inventoryservice.entity.ClothProduct;
 import com.ecommerce.inventoryservice.entity.CosmeticProduct;
 import com.ecommerce.inventoryservice.entity.Product;
 import org.springframework.context.annotation.Scope;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -22,6 +23,7 @@ public class ProductDTOtoEntityMapper {
         product.setProductName(productMetaDataDTO.getProductName());
         product.setCategory(productMetaDataDTO.getCategory());
         product.setDescription(productMetaDataDTO.getDescription());
+        product.setSellerUsername(SecurityContextHolder.getContext().getAuthentication().getName());
         return product;
     }
 
