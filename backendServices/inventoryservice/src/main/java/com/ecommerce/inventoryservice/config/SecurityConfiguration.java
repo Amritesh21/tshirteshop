@@ -22,7 +22,9 @@ public class SecurityConfiguration {
     public SecurityFilterChain getSecurityFilterChainBean(HttpSecurity httpSecurity) {
         try {
             return httpSecurity.authorizeHttpRequests( requests ->
-              requests.requestMatchers("/api/seller/**").hasAuthority("SELLER").anyRequest().authenticated()
+              requests.requestMatchers("/api/seller/**").hasAuthority("SELLER")
+                      .requestMatchers("/api/buyer/**").hasAuthority("BUYER")
+                      .anyRequest().authenticated()
             ).csrf(x -> x.disable()).addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class).build();
         } catch (Exception e) {
             throw new RuntimeException(e);
