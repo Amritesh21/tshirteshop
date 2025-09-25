@@ -3,7 +3,8 @@ spring:
     name: "inventoryService"
   data:
     mongodb:
-      uri: ${mongoDBURI}
+      uri: ${MONGODBURI}
+#      uri: "mongodb+srv://amrit:indira@cluster0.8saiim6.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
       database: "tshirtshop"
 logging:
   level:
